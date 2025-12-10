@@ -23,7 +23,7 @@ function startClock() {
 
 // ===== header 불러오고 → 시계 시작 =====
 document.addEventListener("DOMContentLoaded", () => {
-  fetch("/header.html")
+  fetch("./header.html")
     .then(res => res.text())
     .then(html => {
       document.getElementById("header").innerHTML = html;
