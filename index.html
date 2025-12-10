@@ -5,23 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
   <!-- 테스트 데이터 -->
-  <script src="/js/dummy-data.js"></script>
+  <script src="./js/dummy-data.js"></script>
   <!-- 색상 결정 규칙 -->
-  <script src="/js/color-rules.js"></script>
+  <script src="./js/color-rules.js"></script>
   <!-- 차트 그리는 함수 (원형/막대) -->
-  <script src="/js/chart.js"></script>
+  <script src="./js/chart.js"></script>
   <!-- 실제 DOM 렌더링 -->
-  <script src="/js/main.js"></script>
+  <script src="./js/main.js"></script>
   <!-- 커스텀 css / js-->
   <link rel="stylesheet" href="style.css">
-  <script src="/js/custom.js"></script>
+  <script src="./js/custom.js"></script>
   <title>피더파이프 제조 현황</title>
 </head>
 <body>
   <!-- header 외부에서 가져오기 -->
   <div class="container">
     <div id="header"></div>
-    <script src="/js/custom.js"></script>
+    <script src="./js/custom.js"></script>
     <script>
       fetch("/header.html")
         .then(res => res.text())
@@ -37,7 +37,7 @@
           <span class="sl-l"></span> Pickering#1 <span class="blue">Upper</span>
         </div> -->
         <div class="fimg">
-          <img src="/images/feeder.png" alt="">
+          <img src="./images/feeder.png" alt="">
         </div>
       </article>
   
@@ -123,7 +123,7 @@
           </div>
           <div class="delay-con">
             <div class="delay-img">
-              <img src="/images/delay.png" alt=""></div>
+              <img src="./images/delay.png" alt=""></div>
             <!-- 🔽 여기가 JS로 뿌려줄 자리 -->
             <ul class="delay-list"></ul>
           </div>
