@@ -5,16 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
   <!-- 테스트 데이터 -->
-  <script src="/js/dummy-data.js"></script>
+  <script src="./js/dummy-data.js"></script>
   <!-- 색상 결정 규칙 -->
-  <script src="/js/color-rules.js"></script>
+  <script src="./js/color-rules.js"></script>
   <!-- 차트 그리는 함수 (원형/막대) -->
-  <script src="/js/chart.js"></script>
+  <script src="./js/chart.js"></script>
   <!-- 실제 DOM 렌더링 -->
-  <script src="/js/main.js"></script>
+  <script src="./js/main.js"></script>
   <!-- 커스텀 css / js-->
   <link rel="stylesheet" href="style.css">
-  <script src="/js/custom.js"></script>
+  <script src="./js/custom.js"></script>
   <title>프로젝트 진행현황</title>
 </head>
 <body>
@@ -22,7 +22,7 @@
   <div id="header"></div>
   <script src="/js/custom.js"></script>
   <script>
-    fetch("/header.html")
+    fetch("./header.html")
       .then(res => res.text())
       .then(data => {
         document.getElementById("header").innerHTML = data;
