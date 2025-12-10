@@ -1,0 +1,582 @@
+/* Google Web Font : Noto+Sans */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
+/* FontAwesome CDN 4.7 */
+@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+/* XEION CDN */
+@import url('https://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css');
+
+/* Recet Css */
+* {box-sizing: border-box;}
+ul {list-style: none; padding: 0; margin: 0;}
+a {text-decoration: none; color: #222;}
+h1, h2, h3, h4, h5 {margin: 0;}
+
+:root {
+--content-max-width: 1920px;--content-side-gap: 20px;
+}
+body {
+  background: #F4F6F9;
+  color: #333;
+  font-family: 'Noto Sans KR', sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.container {}
+header .gnb-inner,
+.feeder-sec {
+  width: min(
+    100% - (var(--content-side-gap) * 2),
+    var(--content-max-width)
+  );
+  margin: 0 auto;
+}
+header {
+  margin-bottom: 20px;
+  flex-shrink: 0;
+}
+.gnb-inner {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.left {}
+.left img {
+  width: 180px;
+}
+.center {
+  text-align: center;
+  font-size: 40px;
+}
+.right {
+  text-align: right;
+  font-size: 20px;
+}
+.left, 
+.center,
+.right {
+  width: 33.3%;
+}
+
+/* setion:feeder-sec 왼쪽- 피더이미지 */
+.vline {
+  width: 3px;
+  background: #eee;
+  margin: 15px 20px 15px 20px;
+}
+.feeder-sec {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  gap: 20px;
+  margin: auto;
+}
+.feeder-img {
+  flex: 4;
+  text-align: center;
+}
+.feeder-img img {
+  /* width: 99%; */
+  width: 100%;
+}
+.bc {
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+.fimg-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  height: 60px;
+}
+.blue {
+  color: #005EB8;
+  font-weight: 500;
+  margin-left: 10px;
+}
+/* 파란색 라인바 */
+.sl-lw, .sl-mw,
+.slo-lw, .slo-mw,
+.sl-l, .sl-m,
+.slo-l, .slo-m {
+  top: 1px;
+  position: relative;
+}
+.sl-lw, .sl-mw {
+  /* border: 1px solid #005EB8; */
+  background: #fff;
+}
+.sl-l, .sl-m {
+  /* border: 1px solid #005EB8; */
+  background: #005EB8;
+}
+.sl-lw, .slo-lw,
+.sl-l, .slo-l {
+  height: 28px;
+  width: 8px;
+  margin-right: 10px;
+}
+.sl-mw, .slo-mw,
+.sl-m, .slo-m {
+  width: 6px;
+  height: 22px;
+}
+/* 주황색 라인바 */
+.slo-l, .slo-m {
+  background: #F7991D;
+}
+
+.fimg {}
+
+/* setion:feeder-sec 오른쪽- 피더정보 */
+.feeder-info {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.feeder-info1 {
+  flex: 1.5;
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+.feeder-info2 {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+.feeder-info3 {
+  flex: 1.5;
+  display: flex;
+}
+/* 카드 박스  */
+.fx {
+  display: flex;
+}
+.feeder-card:not(:last-child) {
+  justify-content: space-around;
+}
+.feeder-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  /* 헤더 높이(42px) + 원래 상단 패딩(16px) */
+  padding: 58px 15px 15px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+/* 파란 뚜껑 */
+.feeder-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 42px;
+  background: #005EB8;
+  border-radius: 10px 10px 0 0;
+  z-index: 0;         /* ✅ 맨 아래 레이어 */
+}
+/* 좌우 영역 비율 */
+.feeder-left {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  /* padding-left: 50px; */
+}
+.feeder-right {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* padding-right: 50px; */
+}
+/* 제목 라인 */
+.feeder-title-row {
+  position: absolute;
+  top: 0;
+  left: 20px;
+  right: 20px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #fff;        /* 뚜껑 위니까 흰 글자 */
+  z-index: 1;
+}
+/* 메인 제목(라인명) */
+.feeder-title-main {
+  font-weight: 400;
+  font-size: 20px;
+}
+/* 서브 제목(Upper Feeder) – 파란색 */
+.feeder-stitle {
+  color: #fff; /* 제목 색 #005EB8 */
+  font-weight: 600;
+  font-size: 18px;
+}
+/* 수량 라인 */
+.feeder-count-row {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-weight: 700;
+}
+/* 현재 제작 수량 */
+.feeder-current {
+  font-size: 45px;
+}
+.feeder-separator {
+  font-size: 40px;
+  font-weight: 200;
+  padding: 0 10px;
+}
+/* 전체 수량 */
+.feeder-total {
+  font-size: 45px;
+}
+/* 범례 */
+.feeder-legend {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 4px;
+}
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+/* 동그라미 표시 */
+.legend-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+/* 제작수량: 파랑 */
+.legend-dot-current {
+  background-color: #005eb8;
+}
+/* 총수량: 회색 */
+.legend-dot-total {
+  background-color: #999999;
+}
+/* 제작수량 / 총 수량 텍스트 색*/
+.legend-label {
+  font-size: 18px;
+}
+
+/* 도넛 컨테이너 */
+.feeder-ring {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.feeder-canvas {
+  position: absolute;
+  inset: 0;
+}
+/* 퍼센트 숫자 */
+.feeder-percent {
+  position: relative;
+  font-size: 18px;
+  font-weight: 700;
+  color: #005EB8;
+}
+
+/* 카드 공통(feeder-card)는 기존 것 그대로 사용 */
+
+/* 타이틀 + 범례 행 */
+.proc-header-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+/* 범례 */
+.proc-legend {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.proc-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.proc-legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.proc-legend-dot--plan {
+  background-color: #999; /* 계획 */
+}
+.proc-legend-dot--actual {
+  background-color: #005FEB; /* 실적 */
+}
+.proc-legend-dot--daily {
+  background-color: #69DCF6; /* 실적 */
+}
+
+
+/* ===== 막대 그래프 영역 ===== */
+.proc-bar-chart {
+  position: relative;
+  width: 100%;
+  /* height: 220px; */
+  padding: 12px 12px 24px;
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  overflow: hidden;
+  border-bottom: none; /* 혹시 카드/테마에서 깔린 선 제거 */
+}
+
+/* 점선 가로 그리드 */
+.proc-bar-chart::before {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 12px;
+  bottom: 48px;
+  pointer-events: none;
+  z-index: 0;
+
+  /* 5개의 수평 점선 라인을 한 번에 그림 (5, 10, 15, 20, 그리고 맨 위 25 느낌) */
+  background-image:
+    linear-gradient(to right, #d9d9d9 0 6px, transparent 6px 12px),
+    linear-gradient(to right, #d9d9d9 0 6px, transparent 6px 12px),
+    linear-gradient(to right, #d9d9d9 0 6px, transparent 6px 12px),
+    linear-gradient(to right, #d9d9d9 0 6px, transparent 6px 12px),
+    linear-gradient(to right, #d9d9d9 0 6px, transparent 6px 12px);
+
+  background-repeat: repeat-x;
+  background-size:
+    12px 1px,
+    12px 1px,
+    12px 1px,
+    12px 1px,
+    12px 1px;
+
+  /* 막대 높이(160px)를 4등분해서 아래부터 균등 간격으로 배치 */
+  background-position:
+    0 0%,    /* 맨 아래 라인 (0) */
+    0 25%,   /* 1/4 지점 */
+    0 50%,   /* 2/4 지점 */
+    0 75%,   /* 3/4 지점 */
+    0 100%;  /* 맨 위 라인 */
+}
+
+/* 각 공정(컬럼)은 그 위로 */
+.proc-bar-column {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 1;
+}
+
+
+/* 막대 영역 */
+.proc-bar-wrapper {
+  position: relative;
+  width: 18px;
+  height: 130px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+/* 계획(회색) 막대 */
+.proc-bar--plan {
+  position: absolute;
+  bottom: 0;
+  width: 30px;
+  border-radius: 5px;
+  background-color: #eeeeee; /* 계획: EEEEEE */
+}
+
+/* 실적(파랑) 막대 */
+.proc-bar--actual {
+  position: absolute;
+  bottom: 0;
+  width: 30px;
+  border-radius: 0px;
+  background-color: #005feb; /* 실적: 005FEB */
+}
+
+/* X축 라벨 (짧은 이름만) */
+.proc-bar-label {
+  font-size: 10px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+
+/* ============= proj-status.html ============= */
+.pipe-wrap {
+  display: flex;
+  gap: 15px;
+  height: 100vh;
+}
+.pipe-con,
+.pipe-con2 {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+}
+.pipe-t {
+  flex: 0 0 auto; /* 타이틀 고정 높이 */
+}
+.pipe-desc {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 20px 30px;
+}
+/* 그라데이션 바차트 */
+.pipe-bar-row {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 60px 100px 1fr;  /* 라벨 / 퍼센트 / 바 */
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+.pipe-bar-label {
+  font-size: 20px;
+}
+.pipe-bar-percent {
+  font-size: 20px;
+  padding: 0 20px;
+  font-weight: 500;
+  color: #005EB8;
+  text-align: left;
+}
+
+.pipe-bar-wrapper {
+  flex: 1;
+  display: flex;
+  gap: 2px;
+}
+.pipe-bar-segment {
+  flex: 1;
+  height: 10px;
+  border-radius: 4px;
+  background: #e5e5e5;
+}
+.thin-bar {
+  --segments: 10;
+  --height: 15px;
+  --inactive: #EEEEEE;
+
+  display: flex;
+  width: 100%;/* 200px → 카드 안에서 꽉 차게 */
+  height: var(--height);
+  margin: 5px 0;
+
+  background: var(--inactive);
+  padding: 0 1px;
+  gap: 5px;
+
+  border-radius: 6px;
+  overflow: hidden;
+}
+.thin-bar__seg {
+  flex: 1;
+  background: var(--inactive);
+  border-radius: 3px;
+}
+
+/* ===============지연 공정=============== */
+.delay-list {
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 2열 */
+  gap: 8px 20px;
+}
+
+.delay-simple-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: clamp(10px, 0.9vw, 13px); /* 화면 좁아지면 줄어듦 */
+}
+
+.delay-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.delay-bar {
+  width: 6px;
+  height: 16px;
+  background: #777;
+}
+
+.delay-proc {
+  color: #333;
+  font-weight: 500;
+}
+
+.delay-right {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.delay-count {
+  font-size: clamp(12px, 1vw, 16px);
+  font-weight: 700;
+  color: #d50000; /* 빨강 */
+}
+
+.delay-unit {
+  font-size: clamp(10px, 0.8vw, 13px);
+  color: #333;
+}
+
+.delay-con {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+}
+.delay-img {
+  flex: 1.4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.delay-list {
+  flex: 6;
+}
+.delay-img img {
+  width: 80px;
+  margin-left: -15px;
+}
