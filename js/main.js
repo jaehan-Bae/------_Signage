@@ -159,3 +159,195 @@ const weeklyItems = procWeeklyByPlantDummy.filter(
   item => item.plantId === "pickering"
 );
 renderProcBarChart("procBarChart", weeklyItems, procDailyAccumDummy);
+
+
+/* =====================================================
+   피더 원판 이미지 (SVG + RENDER LOGIC)
+   1) SVG 템플릿
+   - feeder.html 에 풀코드 있음
+   ----------------------------------------------------- */
+const FEEDER_SVG = `
+<svg id="plateSvg"
+  viewBox="0 0 1201 822"
+  preserveAspectRatio="xMidYMid meet"
+  aria-label="Feeder plate overlay">
+
+  <defs>
+    <!-- 음각 홀 -->
+    <radialGradient id="concaveGrad" cx="50%" cy="50%" r="60%">
+      <stop offset="0%"   stop-color="#0A0D02"/>
+      <stop offset="50%"  stop-color="#141908"/>
+      <stop offset="80%"  stop-color="#3B4450"/>
+      <stop offset="100%" stop-color="#AEB6C0"/>
+    </radialGradient>
+
+    <!-- 홀 립 하이라이트 -->
+    <radialGradient id="lipGrad" cx="50%" cy="50%" r="60%">
+      <stop offset="78%" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="90%" stop-color="#ffffff" stop-opacity="0.25"/>
+    </radialGradient>
+
+    <!-- 상태 원 경사 테두리 -->
+    <linearGradient id="bevelStroke" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.70"/>
+      <stop offset="45%"  stop-color="#ffffff" stop-opacity="0.12"/>
+      <stop offset="55%"  stop-color="#000000" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.55"/>
+    </linearGradient>
+
+    <!-- 상태 원 하이라이트 -->
+    <radialGradient id="statusSpec" cx="35%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="40%" stop-color="#ffffff" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <image href="./images/feeder.png" x="0" y="0" width="1201" height="822"></image>
+  <g id="holesLayer"></g>
+</svg>
+`;
+
+/* -----------------------------------------------------
+   2) 마운트
+   - HTML의 #feederMount에 SVG 삽입
+   ----------------------------------------------------- */
+function mountFeeder() {
+  const mount = document.getElementById("feederMount");
+  if (!mount) return;
+  mount.innerHTML = FEEDER_SVG;
+}
+
+/* -----------------------------------------------------
+   3) 데이터
+   - holes: 좌표 배열 (holes.json)
+   - statusById: 상태 맵
+   ----------------------------------------------------- */
+let holes = [];          // ← 여기서 JSON 불러와도 됨
+const statusById = {};
+
+/* -----------------------------------------------------
+   4) 렌더 파라미터
+   ----------------------------------------------------- */
+const BASE_R   = 13.4;
+const LIP_R    = 13.9;
+const STATUS_R = 12.2;
+
+/* -----------------------------------------------------
+   5) 상태 색상 결정
+   ----------------------------------------------------- */
+function colorOf(status) {
+  switch (status) {
+    case "ok":     return "#159C61";
+    case "before": return "#F3F4F6";
+    case "delay":  return "#E6243C";
+    default:       return "transparent";
+  }
+}
+
+/* -----------------------------------------------------
+   6) 렌더링
+   ----------------------------------------------------- */
+function renderHoles() {
+  const ns = "http://www.w3.org/2000/svg";
+  const layer = document.getElementById("holesLayer");
+  if (!layer) return;
+
+  layer.innerHTML = "";
+
+  holes.forEach((h) => {
+    const status = statusById[h.id];
+
+    // [1] 음각 홀 베이스(항상 그림) : 배경의 검은 구멍 가리기
+    const base = document.createElementNS(ns, "circle");
+    base.setAttribute("cx", h.x);
+    base.setAttribute("cy", h.y);
+    base.setAttribute("r", BASE_R);
+    base.setAttribute("fill", "url(#concaveGrad)");
+    base.setAttribute("opacity", "0.98");
+    layer.appendChild(base);
+
+    // [2] 홀 립 하이라이트(항상 그림) : 우푹 파인 립 강조
+    const lip = document.createElementNS(ns, "circle");
+    lip.setAttribute("cx", h.x);
+    lip.setAttribute("cy", h.y);
+    lip.setAttribute("r", LIP_R);
+    lip.setAttribute("fill", "url(#lipGrad)");
+    lip.setAttribute("opacity", "0.55");
+    layer.appendChild(lip);
+
+    // [3] 상태 원(볼록 버튼) : status가 있을 때만 그림
+    const fill = colorOf(status);
+    if (fill === "transparent") return;
+
+    // 3-1) 바탕색(초록/흰/빨강)
+    const dot = document.createElementNS(ns, "circle");
+    dot.setAttribute("cx", h.x);
+    dot.setAttribute("cy", h.y);
+    dot.setAttribute("r", STATUS_R);
+    dot.setAttribute("fill", fill);
+    dot.setAttribute("opacity", "0.92");
+    layer.appendChild(dot);
+
+    // 3-2) 경사/엠보스 테두리 : bevelStroke를 stroke로 써야 볼록해짐
+    const rim = document.createElementNS(ns, "circle");
+    rim.setAttribute("cx", h.x);
+    rim.setAttribute("cy", h.y);
+    rim.setAttribute("r", STATUS_R - 0.5);
+    rim.setAttribute("fill", "none");
+    rim.setAttribute("stroke", "url(#bevelStroke)");     // 강한 효과
+    // rim.setAttribute("stroke-width", "1.2");             // 선명한 보더
+    rim.setAttribute("vector-effect", "non-scaling-stroke");
+    rim.setAttribute("opacity", "0.95");
+    layer.appendChild(rim);
+
+    // 3-3) 상단 좌측 하이라이트(광택) : statusSpec 반짝이?
+    const hi = document.createElementNS(ns, "circle");
+    hi.setAttribute("cx", h.x - STATUS_R * 0.28);
+    hi.setAttribute("cy", h.y - STATUS_R * 0.30);
+    hi.setAttribute("r", STATUS_R * 0.55);
+    hi.setAttribute("fill", "url(#statusSpec)");
+    hi.setAttribute("opacity", "0.35");
+    layer.appendChild(hi);
+  });
+}
+
+/* -----------------------------------------------------
+   7) 외부 제어 API
+   ----------------------------------------------------- */
+function updateStatus(nextMap) {
+  Object.assign(statusById, nextMap);
+  renderHoles();
+}
+window.updateStatus = updateStatus;
+
+/* -----------------------------------------------------
+   8) 초기 실행
+   ----------------------------------------------------- */
+document.addEventListener("DOMContentLoaded", async () => {
+  mountFeeder();
+
+  // JSON 로드
+  const res = await fetch("./holes.json");
+  holes = await res.json();
+
+  renderHoles();
+
+  // 랜덤/리셋 버튼 이벤트
+  document.getElementById("demoBtn")?.addEventListener("click", () => {
+    const ids = holes.map(h => h.id);
+    const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+    const states = ["ok", "before", "delay", ""];
+    const next = {};
+
+    for (let i = 0; i < Math.min(120, ids.length); i++) {
+      next[pick(ids)] = pick(states);
+    }
+    updateStatus(next);
+  });
+
+  document.getElementById("resetBtn")?.addEventListener("click", () => {
+    for (const k in statusById) delete statusById[k];
+    renderHoles();
+  });
+});

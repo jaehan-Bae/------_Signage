@@ -91,7 +91,7 @@ function renderProcBarChart(targetId, items, dailyAccumItems) {
     actualBar.className = "proc-bar--actual";
     actualBar.style.height = `${(item.actual / maxVal) * 100}%`;
 
-    // 🔵 BLUE_GRADIENT 팔레트에서 색 선택
+    // BLUE_GRADIENT 팔레트에서 색 선택
     const colorIndex = index % BLUE_GRADIENT.length;
     const baseColor = BLUE_GRADIENT[colorIndex];
     const topColor =
