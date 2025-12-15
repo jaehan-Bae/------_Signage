@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
   <!-- 테스트 데이터 -->
   <script src="./js/dummy-data.js"></script>
   <!-- 색상 결정 규칙 -->
@@ -12,9 +11,10 @@
   <script src="./js/chart.js"></script>
   <!-- 실제 DOM 렌더링 -->
   <script src="./js/main.js"></script>
+  <!-- 피더 플레이트 -->
+  <script src="./js/feeder-plate.js"></script>
   <!-- 커스텀 css / js-->
   <link rel="stylesheet" href="style.css">
-  <script src="./js/custom.js"></script>
   <title>피더파이프 제조 현황</title>
 </head>
 <body>
@@ -38,11 +38,9 @@
         <button type="button" id="resetBtn">Reset</button>
       </div>
       <div id="feederMount" class="feeder-mount"></div>
-
         <!-- <div class="fimg">
           <img src="./images/feeder.png" alt="">
         </div> -->
-        <div id="feederMount" class="feeder-mount"></div>
       </article>
   
       <div class="vline"></div>
