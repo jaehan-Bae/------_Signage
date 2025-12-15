@@ -1,3 +1,4 @@
+
 // 더미 데이터 원형 그래프
 // 피더 원형/바 공통 더미데이터
 const feederDummy = [
@@ -462,3 +463,10 @@ const pickeringDelayViewData = [
   { name: "Bend(LRB)", count: 2 },
   { name: "P+PBO", count: 1 }
 ];
+
+// ===== 전역 바인딩 (main.js 호환용) =====
+window.feederDummy = feederDummy;
+window.procWeeklyDummy = procWeeklyDummy;
+window.procWeeklyByPlantDummy = procWeeklyByPlantDummy;
+window.procDailyAccumDummy = procDailyAccumDummy;
+window.delayStatusDummy = delayStatusDummy;
