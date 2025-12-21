@@ -5,23 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- 테스트 데이터 -->
   <script src="./js/dummy-data.js"></script>
-  <!-- 색상 결정 규칙 -->
-  <script src="./js/color-rules.js"></script>
   <!-- 차트 그리는 함수 (원형/막대) -->
   <script src="./js/chart.js"></script>
-  <!-- 실제 DOM 렌더링 -->
-  <script src="./js/main.js"></script>
-  <!-- 피더 플레이트 -->
-  <script src="./js/feeder-plate.js"></script>
+  <!-- 홈 페이지 전용어답터 -->
+  <script src="./js/home/summary-adapter.js"></script>
+  <!-- 홈 페이지 전용 렌더러 -->
+  <script src="./js/home/summary-card-renderer.js"></script>
+  <!-- 위클리 먼슬리 어답터 -->
+  <script src="./js/home/small-kpi-adapter.js"></script>
+  <script src="./js/home/small-kpi-renderer.js"></script>
+  <!-- 모든 공정 랜더러 / 어답터 -->
+  <script src="./js/home/progress-all-adapter.js"></script>
+  <script src="./js/home/progress-all-renderer.js"></script>
+  <!-- 홈 페이지 실행 -->
+  <script src="./js/home/index-page.js"></script>
   <!-- 커스텀 css / js-->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./css/style.css">
   <title>피더파이프 제조 현황</title>
 </head>
 <body>
-  <!-- header 외부에서 가져오기 -->
   <div class="container">
     <div id="header"></div>
-    <script src="./js/custom.js"></script>
     <script>
       fetch("./header.html")
         .then(res => res.text())
@@ -29,112 +33,334 @@
           document.getElementById("header").innerHTML = data;
         });
     </script>
-  
-    <!-- section: 피더 -->
-    <section class="feeder-sec">
-      <article class="feeder-img">
-        <div class="feeder-tools">
-        <button type="button" id="demoBtn">Demo: random statuses</button>
-        <button type="button" id="resetBtn">Reset</button>
-      </div>
-      <div id="feederMount" class="feeder-mount"></div>
-        <!-- <div class="fimg">
-          <img src="./images/feeder.png" alt="">
-        </div> -->
-      </article>
-  
-      <div class="vline"></div>
-  
-      <article class="feeder-info">
-        <!-- 피더 요약 카드 -->
-        <div class="feeder-info1 feeder-card bc" data-feeder-id="pickering-upper">
-          <!-- 왼쪽 텍스트 영역 -->
-          <div class="feeder-left">
-            <!-- 제목 -->
-            <div class="feeder-title-row">
-              <span class="sl-mw"></span>
-              <span class="feeder-title-main"></span>
-              <span class="feeder-stitle"></span>
+    <main id="content-wrap">
+      <section class="main-sec feeder-sec">
+        <!-- 메인 왼쪽 -->
+        <div class="main-left">
+          <!-- 맵 -->
+          <div class="map-space">
+            <div class="map-markers">
+              <!-- 지도 표시 마커 레이어 -->
+              <div class="map-marker m-canada">
+                <span class="map-marker__label">Canada</span>
+                <span class="map-marker__dot dots--c2"></span>
+              </div>
+
+              <div class="map-marker m-romania">
+                <span class="map-marker__label">Romania</span>
+                <span class="map-marker__dot dots--c1"></span>
+              </div>
+
+              <div class="map-marker m-china">
+                <span class="map-marker__label">China</span>
+                <span class="map-marker__dot dots--p2"></span>
+              </div>
+
+              <div class="map-marker m-korea">
+                <span class="map-marker__label">Korea</span>
+                <span class="map-marker__dot dots--p1"></span>
+              </div>
             </div>
-  
-            <!-- 수량 -->
-            <div class="feeder-count-row">
-              <span class="feeder-current" data-field="produced"></span>
-              <span class="feeder-separator"> / </span>
-              <span class="feeder-total" data-field="total"></span>
-            </div>
-  
-            <!-- 범례 -->
-            <div class="feeder-legend">
-              <span class="legend-item">
-                <span class="legend-dot legend-dot-current"></span>
-                <span class="legend-label legend-label-current">제작수량</span>
-              </span>
-              <span class="legend-item">
-                <span class="legend-dot legend-dot-total"></span>
-                <span class="legend-label legend-label-total">총 수량</span>
-              </span>
+            <!-- 두산 에너빌리티 공급 실적 -->
+            <div class="map-notice">
+              <!-- map-notice2 / 왼쪽 -->
+              <div class="map-notice1">
+                <div class="map-icon">
+                  <div class="map-icon-head">
+                    <img src="./images/manufacturer.png" alt="">
+                    두산 에너빌리티 공급 실적
+                  </div>
+                  <div class="map-icon-body">
+                    <div class="notice-group">
+                      <div class="notice-country">
+                        <span class="dots dots--p1"></span>
+                        <span class="country-name">한국</span>
+                      </div>
+                      <div class="notice-items">
+                        <div class="notice-item">월성#1 Feeder RFR</div>
+                        <div class="notice-item">월성#2 ~ 4 Feeder</div>
+                      </div>
+                    </div>
+
+                    <div class="notice-group">
+                      <div class="notice-country">
+                        <span class="dots dots--p2"></span>
+                        <span class="country-name">중국</span>
+                      </div>
+                      <div class="notice-items">
+                        <div class="notice-item">Qinshan #1,2 Feeder</div>
+                      </div>
+                    </div>
+                    <!-- map-notice2 / 오른쪽 -->
+                    <div class="notice-group">
+                      <div class="notice-country">
+                        <span class="dots dots--p3"></span>
+                        <span class="country-name">캐나다</span>
+                      </div>
+                      <div class="notice-items">
+                        <div class="notice-item">Point Lepreau RFR</div>
+                        <div class="notice-item">Bruce #6 Feeder RFR</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="map-notice2">
+                <div class="map-icon">
+                  <div class="map-icon-head">
+                    <img src="./images/settings.png" alt="">
+                    제작 진행 중
+                  </div>
+                  <div class="map-icon-body">
+                    <div class="notice-group">
+                      <div class="notice-country">
+                        <span class="dots dots--c1"></span>
+                        <span class="country-name">루마니아</span>
+                      </div>
+                      <div class="notice-items">
+                        <div class="notice-item">Cernavoda #1,2 Feeder RFR</div>
+                      </div>
+                    </div>
+
+                    <div class="notice-group">
+                      <div class="notice-country">
+                        <span class="dots dots--c2"></span>
+                        <span class="country-name">캐나다</span>
+                      </div>
+                      <div class="notice-items">
+                        <div class="notice-item">Pickering #5-8 Feeder</div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
             </div>
           </div>
-  
-          <!-- 오른쪽 원형 그래프: 퍼센트는 CSS 변수로 제어 -->
-          <div class="feeder-right">
-            <div class="feeder-ring">
-              <canvas class="feeder-canvas" width="130" height="130"></canvas>
-              <span class="feeder-percent" data-field="percent"></span>
+          <!-- MAP BOTTOM -->
+          <div class="map-bottom">
+            <div class="map-bottom-grid">
+              <!-- PICKERING -->
+              <div class="card card--big" data-card="pickering">
+                <div data-field="title">PICKERING</div>
+
+                <div class="summary-row">
+                  <div class="donut-wrap">
+                    <canvas class="feeder-canvas" width="90" height="90"></canvas>
+                    <div class="donut-center"><span data-field="percent">80%</span></div>
+                  </div>
+
+                  <div class="summary-text">
+                    <div class="kv">
+                      <span class="k">목표</span><span class="v" data-field="total">740</span>
+                    </div>
+                    <div class="kv">
+                      <span class="k">달성</span><span class="v" data-field="produced">240</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="mini-bottom">
+                  <div class="mini-row" data-line="upper">
+                    <div class="mini-label">UPPER</div>
+                    <div class="mini-track">
+                      <div class="mini-fill" data-role="mini-upper" style="width:80%;"></div>
+                    </div>
+                    <div class="mini-pct" data-role="mini-upper-pct">80%</div>
+                  </div>
+
+                  <div class="mini-row" data-line="middle">
+                    <div class="mini-label">MIDDLE</div>
+                    <div class="mini-track">
+                      <div class="mini-fill" data-role="mini-middle" style="width:40%;"></div>
+                    </div>
+                    <div class="mini-pct" data-role="mini-middle-pct">40%</div>
+                  </div>
+
+                  <div class="mini-row" data-line="lower">
+                    <div class="mini-label">LOWER</div>
+                    <div class="mini-track">
+                      <div class="mini-fill" data-role="mini-lower" style="width:60%;"></div>
+                    </div>
+                    <div class="mini-pct" data-role="mini-lower-pct">60%</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CERNAVODA -->
+              <div class="card card--big" data-card="cernavoda">
+                <div data-field="title">CERNAVODA</div>
+                <div class="summary-row">
+                  <div class="donut-wrap">
+                    <canvas class="feeder-canvas" width="90" height="90"></canvas>
+                    <div class="donut-center"><span data-field="percent">80%</span></div>
+                  </div>
+
+                  <div class="summary-text">
+                    <div class="kv">
+                      <span class="k">목표</span><span class="v" data-field="total">300</span>
+                    </div>
+                    <div class="kv">
+                      <span class="k">달성</span><span class="v" data-field="produced">120</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="mini-bottom">
+                  <div class="mini-row" data-line="upper">
+                    <div class="mini-label">UPPER</div>
+                    <div class="mini-track">
+                      <div class="mini-fill" data-role="mini-upper" style="width:55%;"></div>
+                    </div>
+                    <div class="mini-pct" data-role="mini-upper-pct">55%</div>
+                  </div>
+
+                  <div class="mini-row" data-line="lower">
+                    <div class="mini-label">LOWER</div>
+                    <div class="mini-track">
+                      <div class="mini-fill" data-role="mini-lower" style="width:35%;"></div>
+                    </div>
+                    <div class="mini-pct" data-role="mini-lower-pct">35%</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right small cards (2x2) -->
+              <!-- 위클리 - 피커링 -->
+              <div class="card card--small small-kpi" data-card="weekly-pickering">
+                <div data-field="title">Weekly <span class="stitle">(Pickering)</span></div>
+
+                <div class="small-kpi__body">
+                  <!-- A묶음: value + spark (가로, gap) -->
+                  <div class="small-kpi__top">
+                    <div data-field="value" class="small-kpi__value">650</div>
+                      <div class="spark-box" data-field="spark-box">
+                      <canvas class="spark"></canvas>
+                    </div>
+                  </div>
+
+                  <!-- B묶음: label + delta (세로로 한 묶음) -->
+                  <div class="small-kpi__meta">
+                    <div data-field="label" class="small-kpi__label">이번 주 목표</div>
+                    <div data-field="delta" class="small-kpi__delta"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 위클리 - 체르나보다 -->
+              <div class="card card--small small-kpi" data-card="weekly-cernavoda">
+                <div data-field="title">Weekly <span class="stitle">(Cernavoda)</span></div>
+
+                <div class="small-kpi__body">
+                  <div class="small-kpi__top">
+                    <div data-field="value" class="small-kpi__value">650</div>
+                      <div class="spark-box" data-field="spark-box">
+                      <canvas class="spark"></canvas>
+                    </div>
+                  </div>
+
+                  <div class="small-kpi__meta">
+                    <div data-field="label" class="small-kpi__label">이번 주 목표</div>
+                    <div data-field="delta" class="small-kpi__delta"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 먼슬리 - 피커링 -->
+              <div class="card card--small small-kpi" data-card="monthly-pickering">
+                <div data-field="title">Monthly <span class="stitle">(Pickering)</span></div>
+
+                <div class="small-kpi__body">
+                  <div class="small-kpi__top">
+                    <div data-field="value" class="small-kpi__value">650</div>
+                      <div class="spark-box" data-field="spark-box">
+                      <canvas class="spark"></canvas>
+                      </div>
+                  </div>
+
+                  <div class="small-kpi__meta">
+                    <div data-field="label" class="small-kpi__label">이번 달 목표</div>
+                    <div data-field="delta" class="small-kpi__delta"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 먼슬리 - 체르나보다 -->
+              <div class="card card--small small-kpi" data-card="monthly-cernavoda">
+                <div data-field="title">Monthly <span class="stitle">(Cernavoda)</span></div>
+
+                <div class="small-kpi__body">
+                  <div class="small-kpi__top">
+                    <div data-field="value" class="small-kpi__value">650</div>
+                      <div class="spark-box" data-field="spark-box">
+                      <canvas class="spark"></canvas>
+                    </div>
+                  </div>
+
+                  <div class="small-kpi__meta">
+                    <div data-field="label" class="small-kpi__label">이번 달 목표</div>
+                    <div data-field="delta" class="small-kpi__delta"></div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-  
-        <!-- 공정별 진행현황 카드 -->
-        <div class="feeder-info2 feeder-card bc" data-proc-id="weekly">
-          <div class="proc-header-row">
-            <div class="feeder-title-row">
-              <span class="sl-mw"></span><div class="feeder-title-main">공정별 진행현황</div><span class="feeder-stitle">(Weekly 기준)</span>
+        <!-- 메인 오른쪽 -->
+        <div class="main-right">
+          <div class="progress-all">
+            <div class="progress-adjust">
+              <!-- 위쪽: flex2 -->
+              <div class="progress-wrap">
+                <div class="progress-left card">
+                  <div class="proc-card" data-role="proc-card" data-plant="pickering"></div>
+                </div>
+
+                <div class="progress-right card">
+                  <div class="proc-card" data-role="proc-card" data-plant="cernavoda"></div>
+                </div>
+              </div>
+              <!-- 아래쪽: flex1 -->
+              <div class="progress-bottom card" data-role="delay-card">
+                <div class="proc-header-row">
+                  <span class="feeder-title-main"><img src="./images/warning.png" alt=""> 공정 지연 현황</span>
+                </div>
+                <div class="delay-con">
+                  <!-- data-code 연결하면 됨 -->
+                  <div class="delay-left">
+                    <div class="delay-item" data-code="A09W" data-proc="PBC" data-status="delayed">
+                      <span class="delay-label">A09W / PBC</span>
+                      <span class="status-delayed">delayed</span>
+                    </div>
+                    <div class="delay-item" data-code="C13F" data-proc="ADAPTOR" data-status="delayed">
+                      <span class="delay-label">C13F / Adaptor</span>
+                      <span class="status-delayed">delayed</span>
+                    </div>
+                  </div>
+                  <div class="vline"></div>
+                  <div class="delay-right">
+                    <div class="delay-item" data-code="E02P" data-proc="P+PBO" data-status="delayed">
+                      <span class="delay-label">E02P / P+PBO</span>
+                      <span class="status-delayed">delayed</span>
+                    </div>
+                    <div class="delay-item" data-code="R19F" data-proc="FIN" data-status="delayed">
+                      <span class="delay-label">R19F / FIN</span>
+                      <span class="status-delayed">delayed</span>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
             </div>
-  
-          </div>
-          
-          <!-- 막대 그래프 영역 -->
-          <div class="proc-bar-chart" id="procBarChart"></div>
-          <!-- 우측 범례 -->
-          <div class="proc-legend">
-            <span class="proc-legend-item">
-              <span class="proc-legend-dot proc-legend-dot--plan"></span>
-              <span class="proc-legend-label">계획</span>
-            </span>
-            <span class="proc-legend-item">
-              <span class="proc-legend-dot proc-legend-dot--actual"></span>
-              <span class="proc-legend-label">실적</span>
-            </span>
-            <span class="proc-legend-item">
-              <span class="proc-legend-dot proc-legend-dot--daily"></span>
-              <span class="proc-legend-label">일간</span>
-            </span>
           </div>
         </div>
-  
-        <!-- 공정 지연 현황 카드 -->
-        <div class="feeder-info3 feeder-card bc" data-delay-id="delay-main">
-          <div class="proc-header-row">
-            <div class="feeder-title-row">
-              <span class="sl-mw"></span>
-              <span class="feeder-title-main" data-field="delay-title">공정 지연 현황</span>
-              <span class="feeder-stitle" data-field="delay-subtitle"></span>
-            </div>
-          </div>
-          <div class="delay-con">
-            <div class="delay-img">
-              <img src="./images/delay.png" alt="딜레이 이미지"></div>
-            <!-- 🔽 여기가 JS로 뿌려줄 자리 -->
-            <ul class="delay-list"></ul>
-          </div>
-        </div>
-  
-      </article>
-    </section>
+      </section>
+    </main>
   </div>
-
-
+  <script src="./js/custom.js"></script>
 </body>
 </html>
