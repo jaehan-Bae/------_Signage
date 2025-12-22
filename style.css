@@ -615,7 +615,10 @@ header {
   text-align: center;
 }
 .feeder-img img {
-  max-height: 90vh;
+
+  max-height: 100%;
+  object-fit: contain;
+  height: 100%;
 }
 .bc {
   background: #fff;
@@ -679,7 +682,7 @@ header {
   flex-direction:column; 
   gap:10px; }
 .feeder-info2{ 
-  flex:2; 
+  flex:2.5; 
   display:flex; 
   align-items:center;
   flex-direction: column; 
