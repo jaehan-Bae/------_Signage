@@ -134,23 +134,42 @@ function renderProcBarChart(targetId, items, dailyAccumItems) {
 
   const containerRect = container.getBoundingClientRect();
 
-  cols.forEach((col, index) => {
-    const rect = col.getBoundingClientRect();
-    const centerX = rect.left - containerRect.left + rect.width / 2;
+cols.forEach((col, index) => {
+  
+  const rect = col.getBoundingClientRect();
+  const centerX = rect.left - containerRect.left + rect.width / 2;
 
-    const item = items[index];
-    const found =
-      dailyAccumItems.find((d) => d.key === item.key) || null;
+  const wrapper = col.querySelector(".proc-bar-wrapper");
+  if (!wrapper) return;
 
-    // 데일리 누적값이 있으면 그 값, 없으면 actual 기준으로
-    const value = found ? found.value : item.actual;
-    const ratio = value / maxVal;
+  const wrapperRect = wrapper.getBoundingClientRect();
 
-    // y는 캔버스 높이 기준 (0이 위, height가 아래)
-    const y = canvas.height - ratio * canvas.height;
+  const item = items[index];
+  const found =
+    dailyAccumItems.find((d) => d.key === item.key) || null;
 
-    points.push({ x: centerX, y });
-  });
+  const value = found ? found.value : item.actual;
+  const ratio = value / maxVal;
+
+  const topY = wrapperRect.top - containerRect.top;
+  const bottomY = wrapperRect.bottom - containerRect.top;
+
+  const LEGEND_GAP = 70; // 범례 영역 무시할 높이(px)
+
+const chartTop = 0;
+const chartBottom = canvas.height - LEGEND_GAP;
+const chartHeight = chartBottom - chartTop;
+
+let y = chartBottom - ratio * chartHeight;
+
+// 안전 클램프
+y = Math.max(chartTop, Math.min(chartBottom, y));
+
+points.push({ x: centerX, y });
+
+
+});
+
 
   // 실선 그리기
   if (points.length > 1) {
