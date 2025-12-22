@@ -66,52 +66,59 @@ header {
 
 /* ######################## 메인페이지 ###################### */
 #content-wrap { height: calc(100vh - 100px); }
-.main-left {
-  display: flex;
-  flex: 2;
-  gap: 15px;
-  flex-direction: column;
+
+.main-left{
+  display:flex;
+  flex:2;
+  gap:15px;
+  flex-direction:column;
 }
-.main-right {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: 15px;
+.main-right{
+  display:flex;
+  flex:1;
+  flex-direction:column;
+  gap:15px;
 }
-.main-sec {
-  height: 100%;
-}
-.map-space {
+.main-sec{ height:100%; }
+
+/* 맵 영역 */
+.map-space{
   flex: 3 1 0;
   border: 1px solid #eee;
-  display: flex;
   position: relative;
   overflow: hidden;
 }
-/* 맵 실루엣(정적 이미지) */
-.map-space::after{
-  content: "";
+
+/* 지도 + 마커 레이어 */
+.map-stage{
   position: absolute;
-  right: 16px;
-  top: 10px;
+  inset: 0;
+}
+
+/* 지도는 꽉 차게 */
+.map-img{
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: calc(100% - 20px);
-  background: url("./images/map-silhouette.png") no-repeat right center;
-  background-size: cover;
-  opacity: 0.9;             /* 스샷처럼 은은하게 */
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  opacity: 0.9;
   pointer-events: none;
   z-index: 0;
 }
+
+/* 마커 레이어 */
 .map-markers{
   position: absolute;
   inset: 0;
-  z-index: 1; 
+  z-index: 1;
 }
 
-/* 마커 기본 스타일 */
+/* 마커 기본 */
 .map-marker{
   position: absolute;
-  transform: translate(-50%, -50%); /* 좌표가 “점 중심”이 되게 */
+  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -121,40 +128,75 @@ header {
   color: #fff;
   text-shadow: 0 1px 2px rgba(0,0,0,.35);
 }
-.map-marker__dot{
-  width: 10px;
-  height: 10px;
+.map-marker__label{ white-space: nowrap; }
+
+/* 마커 좌표 */
+.m-canada { left: 16%;  top: 33%; }
+.m-romania{ left: 54.5%; top: 30%; }
+.m-china  { left: 79%;  top: 43%; }
+.m-korea  { left: 82%;  top: 36%; }
+
+/* 색상 토큰 */
+.is-p1{ --c: #1E86EE; } 
+.is-p2{ --c: #3ABEFF; }
+.is-p3{ --c: #B0E9FF; }
+.is-c1{ --c: #FFB338; } 
+.is-c2{ --c: #86dbfc; }
+
+
+.map-marker__dot.hotspot{
+  --core: 8px;
+  --r1: 4px;   /* 1단 끝 */
+  --r2: 11px;   /* 2단 끝 */
+  --r3: 28px;   /* 3단 끝 */
+
+  width: var(--core);
+  height: var(--core);
   border-radius: 50%;
+  background: var(--c);
+  position: relative;
 }
 
-/* ====== 좌표(예시) : 실제로는 미세 조정 필요 ====== */
-.m-canada { left: 13%; top: 33%; }
-.m-romania { left: 53.5%; top: 34%; }
-.m-china   { left: 76%; top: 44%; }
-.m-korea   { left: 81%; top: 38%; }
-.map-bottom {
-  flex: 1 1 0;
+.map-marker__dot.hotspot::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width: calc(var(--r3) * 2);
+  height: calc(var(--r3) * 2);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events:none;
+
+  /* 구획(단계) 번짐: 경계가 딱 보이게 */
+  background: radial-gradient(circle,
+    /* 코어 주변부터 1단 */
+    color-mix(in srgb, var(--c) 45%, transparent) 0 calc(var(--r1) / var(--r3) * 100%),
+    /* 2단 */
+    color-mix(in srgb, var(--c) 22%, transparent) calc(var(--r1) / var(--r3) * 100%) calc(var(--r2) / var(--r3) * 100%),
+    /* 3단 */
+    color-mix(in srgb, var(--c) 12%, transparent) calc(var(--r2) / var(--r3) * 100%) 100%
+  );
+
+  /* 블러를 아주 약하게만 */
+  filter: blur(0.7px);
 }
-.map-bottom .card {
-  background: #fff;
-  height: 100%;
-}
-.map-icon img {
-  width: 18px;
-  height: auto;
-}
-.map-notice {
+
+/* 노티스는 확대 영향 없게 map-space에 직접 고정 */
+.map-notice{
+  position: absolute;
+  left: 16px;
+  bottom: 5px;
   display: flex;
   gap: 10px;
   font-size: 14px;
-  z-index: 1;
-  bottom: 0 ;
-  opacity: .7;
-  position: absolute;
-  border-radius: 5px;
+  z-index: 3;
+  opacity: .75;
 }
+
+/* 노티스 카드 */
 .map-notice1,
-.map-notice2 {
+.map-notice2{
   background: #fff;
   border: 1px solid #eee;
   width: 220px;
@@ -162,133 +204,120 @@ header {
   padding: 15px;
   border-radius: 5px;
 }
-.map-icon-head {
-  display: flex;
-  color: #111;
-  gap: 5px;
-  align-items: center;
-  z-index: 1;
-  font-size: 14px;
+
+.map-icon img{
+  width: 18px;
+  height: auto;
 }
-/* layout */
-.map-bottom-grid{
-  display: grid;
-  grid-template-columns: 2fr 2fr 1.6fr 1.6fr; /* big, big, small, small */
-  gap: 15px;
-  align-items: stretch;
-    grid-auto-rows: 1fr;            /* 자동 생성되는 행도 1fr로 채움 */
-      align-content: stretch;         /* 행들이 남는 높이를 분배해서 채움 */
+.map-icon-head{
+  display:flex;
+  gap:5px;
+  align-items:center;
+  font-size:14px;
+  color:#111;
 }
-/* size */
-.card--big{
-  grid-row: span 2;     /* 왼쪽 큰 카드 2행 */
-  min-height: 300px;    /* 필요 시 조절 */
-  position: relative;
-}
-.card--big .feeder-canvas {
-  position: absolute;
-  top: 50px;
-  width: 100px;
-  height: 100px;
-}
-.card--small{
-  min-height: 140px;
-}
-.card.card--big .mini-row{
-  display: grid;
-  grid-template-columns: 1fr 56px; /* 바 / 퍼센트 */
-  align-items: center;
-  gap: 10px;
-  margin-top: 12px;
-}
-.card.card--big [data-role^="mini-"]{
-  height: 10px;
-  border-radius: 6px;
-  /* 트랙(뒤) */
-  position: relative;
-}
-/* 지금은 바 자체가 fill div */
-.card.card--big [data-role="mini-upper"]{ background: #95E1FB; }
-.card.card--big [data-role="mini-middle"]{ background: #337DF6; }
-.card.card--big [data-role="mini-lower"]{ background: #006FE6; }
-.card.card--big [data-role$="-pct"]{
-  text-align: right;
-  font-size: 12px;
-  color: #111;
-}
-/* notice body */
+
 .map-icon-body{
   margin-top: 12px;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
-/* 그룹(국가 + 하위항목 묶음) */
-.notice-group{}
-/* 국가 줄 */
+
 .notice-country{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: 700;
-  color: #111;
-  line-height: 1.2;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:700;
+  color:#111;
+  line-height:1.2;
 }
-/* 마커(dot) */
+
 .dots{
   width: 10px;
   height: 10px;
   border-radius: 50%;
   flex: 0 0 auto;
+  background: var(--c);
 }
-/* 왼쪽 마커 */
-.dots--p1{ background: #006FE6; }
-.dots--p2{ background: #11B0FF; }
-.dots--p3{ background: #95E1FB; }
-/* 오른쪽 마커 */
-.dots--c1{ background: #FFA000; }
-.dots--c2{ background: #95E1FB; }
-/* 하위항목 영역: “옆에 여백” (= 들여쓰기) */
+
 .notice-items{
-  margin-left: 20px;   /* ← 여기 조절하면 국가 대비 옆 여백 늘어남 */
+  margin-left: 20px;
   margin-top: 8px;
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
-/* 하위항목 텍스트 */
 .notice-item{
   font-size: 13px;
   color: #686D78;
   line-height: 1.35;
 }
-.progress-all {
-  display: flex;
-  flex-direction: column; 
-  flex: 1;          
-}
-.progress-adjust {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex: 1;
-}
-.progress-wrap {
-  display: flex;
-  flex: 3.8;
+
+/* =========================================
+   BELOW MAP
+   ========================================= */
+.map-bottom{ flex: 1 1 0; }
+.map-bottom .card{ background:#fff; height:100%; }
+
+/* 기존 grid */
+.map-bottom-grid{
+  display: grid;
+  grid-template-columns: 2fr 2fr 1.6fr 1.6fr;
   gap: 15px;
+  align-items: stretch;
+  grid-auto-rows: 1fr;
+  align-content: stretch;
 }
-.progress-bottom {
-  flex: 1;
+
+.card--big{
+  grid-row: span 2;
+  min-height: 300px;
+  position: relative;
 }
-.progress-bottom .card {
+
+.card--big .feeder-canvas{
+  position: absolute;
+  top: 50px;
+  width: 100px;
+  height: 100px;
 }
-.progress-left {
-  flex: 1;
+
+.card--small{ min-height: 140px; }
+
+.card.card--big .mini-row{
+  display: grid;
+  grid-template-columns: 1fr 56px;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
 }
-.progress-right {
-  flex: 1;
+
+.card.card--big [data-role^="mini-"]{
+  height: 10px;
+  border-radius: 6px;
+  position: relative;
 }
+
+.card.card--big [data-role="mini-upper"]{ background: #95E1FB; }
+.card.card--big [data-role="mini-middle"]{ background: #337DF6; }
+.card.card--big [data-role="mini-lower"]{ background: #006FE6; }
+
+.card.card--big [data-role$="-pct"]{
+  text-align: right;
+  font-size: 12px;
+  color: #111;
+}
+
+/* other layout blocks */
+.progress-all{ display:flex; flex-direction:column; flex:1; }
+.progress-adjust{ display:flex; flex-direction:column; gap:10px; flex:1; }
+.progress-wrap{ display:flex; flex:3.8; gap:15px; }
+.progress-bottom{ flex:1; }
+.progress-left{ flex:1; }
+.progress-right{ flex:1; }
+
+
 /* ########### 메인화면- 맵 밑의 토탈 카드 */
 .card.card--big{
   padding: 15px;
@@ -545,6 +574,7 @@ header {
 /* setion:feeder-sec 왼쪽- 피더이미지 */
 .vline {
   width: 3px;
+  height: 4vh;
   background: #eee;
   margin: 15px 20px 15px 20px;
 }
@@ -652,18 +682,6 @@ header {
   background: #fff;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   overflow: hidden;
-}
-/* 파란 뚜껑 */
-.feeder-card::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 42px;
-  background: #005EB8;
-  border-radius: 10px 10px 0 0;
-  z-index: 0;         /* ✅ 맨 아래 레이어 */
 }
 /* 좌우 영역 비율 */
 .feeder-left {
@@ -1035,8 +1053,8 @@ header {
 
 .delay-left {
   display: flex;
-  align-items: center;
   gap: 6px;
+  flex-direction: column;
 }
 
 .delay-bar {
@@ -1054,6 +1072,7 @@ header {
   display: flex;
   align-items: baseline;
   gap: 2px;
+  flex-direction: column;
 }
 
 .delay-count {
@@ -1061,17 +1080,18 @@ header {
   font-weight: 700;
   color: #d50000; /* 빨강 */
 }
-
 .delay-unit {
   font-size: clamp(10px, 0.8vw, 13px);
   color: #333;
 }
-
 .delay-con {
   display: flex;
   justify-content: space-between;
   width: 100%;
   gap: 10px;
+}
+.status-delayed {
+  font-weight: 300;
 }
 .delay-img {
   flex: 1.4;

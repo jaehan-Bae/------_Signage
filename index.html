@@ -39,41 +39,45 @@
         <div class="main-left">
           <!-- 맵 -->
           <div class="map-space">
-            <div class="map-markers">
-              <!-- 지도 표시 마커 레이어 -->
-              <div class="map-marker m-canada">
-                <span class="map-marker__label">Canada</span>
-                <span class="map-marker__dot dots--c2"></span>
-              </div>
+            <div class="map-stage">
+              <img class="map-img" src="./images/map-silhouette.png" alt="World map" />
 
-              <div class="map-marker m-romania">
-                <span class="map-marker__label">Romania</span>
-                <span class="map-marker__dot dots--c1"></span>
-              </div>
+              <div class="map-markers">
+                <div class="map-marker m-canada">
+                  <span class="map-marker__label">Canada</span>
+                  <span class="map-marker__dot hotspot is-c2"></span>
+                </div>
 
-              <div class="map-marker m-china">
-                <span class="map-marker__label">China</span>
-                <span class="map-marker__dot dots--p2"></span>
-              </div>
+                <div class="map-marker m-romania">
+                  <span class="map-marker__label">Romania</span>
+                  <span class="map-marker__dot hotspot is-c1"></span>
+                </div>
 
-              <div class="map-marker m-korea">
-                <span class="map-marker__label">Korea</span>
-                <span class="map-marker__dot dots--p1"></span>
+                <div class="map-marker m-china">
+                  <span class="map-marker__label">China</span>
+                  <span class="map-marker__dot hotspot is-p2"></span>
+                </div>
+
+                <div class="map-marker m-korea">
+                  <span class="map-marker__label">Korea</span>
+                  <span class="map-marker__dot hotspot is-p1"></span>
+                </div>
               </div>
             </div>
-            <!-- 두산 에너빌리티 공급 실적 -->
+
+            <!-- map-notice는 stage 밖으로 빼서 확대 영향 제거 -->
             <div class="map-notice">
-              <!-- map-notice2 / 왼쪽 -->
               <div class="map-notice1">
                 <div class="map-icon">
                   <div class="map-icon-head">
                     <img src="./images/manufacturer.png" alt="">
                     두산 에너빌리티 공급 실적
                   </div>
+
                   <div class="map-icon-body">
                     <div class="notice-group">
                       <div class="notice-country">
-                        <span class="dots dots--p1"></span>
+                        <span class="dots is-p1"></span>
                         <span class="country-name">한국</span>
                       </div>
                       <div class="notice-items">
@@ -84,17 +88,17 @@
 
                     <div class="notice-group">
                       <div class="notice-country">
-                        <span class="dots dots--p2"></span>
+                        <span class="dots is-p2"></span>
                         <span class="country-name">중국</span>
                       </div>
                       <div class="notice-items">
                         <div class="notice-item">Qinshan #1,2 Feeder</div>
                       </div>
                     </div>
-                    <!-- map-notice2 / 오른쪽 -->
+
                     <div class="notice-group">
                       <div class="notice-country">
-                        <span class="dots dots--p3"></span>
+                        <span class="dots is-p3"></span>
                         <span class="country-name">캐나다</span>
                       </div>
                       <div class="notice-items">
@@ -105,16 +109,18 @@
                   </div>
                 </div>
               </div>
+
               <div class="map-notice2">
                 <div class="map-icon">
                   <div class="map-icon-head">
                     <img src="./images/settings.png" alt="">
                     제작 진행 중
                   </div>
+
                   <div class="map-icon-body">
                     <div class="notice-group">
                       <div class="notice-country">
-                        <span class="dots dots--c1"></span>
+                        <span class="dots is-c1"></span>
                         <span class="country-name">루마니아</span>
                       </div>
                       <div class="notice-items">
@@ -124,7 +130,7 @@
 
                     <div class="notice-group">
                       <div class="notice-country">
-                        <span class="dots dots--c2"></span>
+                        <span class="dots is-c2"></span>
                         <span class="country-name">캐나다</span>
                       </div>
                       <div class="notice-items">
@@ -132,11 +138,11 @@
                       </div>
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>
           </div>
+
           <!-- MAP BOTTOM -->
           <div class="map-bottom">
             <div class="map-bottom-grid">
