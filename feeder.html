@@ -1,210 +1,174 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Feeder Plate – Concave Holes (Inward)</title>
-  <style>
-    :root { --W:1201; --H:822; }
-    body {
-      margin: 0;
-    }
-    .legend {
-      width: min(1201px, 100vw);
-      margin: 14px auto 10px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      padding: 0 10px;
-      box-sizing: border-box;
-      font-size: 13px;
-    }
-    .pill {
-      background: #fff;
-      border: 1px solid #e5e7eb;
-      border-radius: 999px;
-      padding: 6px 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.05);
-    }
-    button {
-      border: 1px solid #e5e7eb;
-      background: #fff;
-      border-radius: 10px;
-      padding: 8px 10px;
-      cursor: pointer;
-    }
-    .wrap {
-      width: min(1201px, 100vw);
-      aspect-ratio: var(--W) / var(--H);
-      margin: 0 auto 16px;
-      background: #fff;
-      box-shadow: 0 6px 18px rgba(0,0,0,.08);
-      border-radius: 12px;
-      overflow: hidden;
-      position: relative;
-    }
-    svg { width: 100%; height: 100%; display: block; }
-    code { background:#f3f4f6; padding:2px 6px; border-radius:6px; }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 테스트 데이터 -->
+  <script src="./js/dummy-data.js"></script>
+  <!-- 색상 결정 규칙 -->
+  <script src="./js/color-rules.js"></script>
+  <!-- 차트 그리는 함수 (원형/막대) -->
+  <script src="./js/chart.js"></script>
+  <!-- 실제 DOM 렌더링 -->
+  <script src="./js/main.js"></script>
+  <!-- 피더 플레이트 -->
+  <script src="./js/feeder-plate.js"></script>
+  <!-- 커스텀 css / js-->
+  <link rel="stylesheet" href="style.css">
+  <title>피더파이프 제조 현황</title>
 </head>
 <body>
-  <div class="legend">
-    <button id="demoBtn">Demo: random statuses</button>
-    <button id="resetBtn">Reset</button>
+  <!-- header 외부에서 가져오기 -->
+  <div class="container">
+    <div id="header"></div>
+    <script src="./js/custom.js"></script>
+    <script>
+      fetch("./header.html")
+        .then(res => res.text())
+        .then(data => {
+          document.getElementById("header").innerHTML = data;
+        });
+    </script>
+  
+    <!-- section: 피더 -->
+    <div id="#content-wrap">
+      <section class="feeder-sec">
+        <article class="feeder-img">
+        <!-- <div class="feeder-tools">
+          <button type="button" id="demoBtn">Demo: random statuses</button>
+          <button type="button" id="resetBtn">Reset</button>
+        </div> -->
+        <div id="feederMount" class="feeder-mount"></div>
+        </article>
+    
+        <div class="vvline"></div>
+    
+        <article class="feeder-info">
+          <!-- 피더 요약 카드 -->
+        <div class="feeder-info1 feeder-card bc" data-feeder-id="pickering-upper">
+          <div class="feeder-left">
+            <div class="feeder-title-row">
+              <span class="feeder-title-main"></span>
+              <span class="feeder-stitle"></span>
+            </div>
+
+            <div class="feeder-body-row">
+              <div class="feeder-donut-con">
+                <div class="feeder-ring">
+                  <canvas class="feeder-canvas" width="130" height="130"></canvas>
+                  <span class="feeder-percent" data-field="percent"></span>
+                </div>
+
+                <div class="feeder-kpi">
+                  <div class="kpi-row">
+                    <span class="kpi-label">목표</span>
+                    <b class="kpi-value" data-field="total"></b>
+                  </div>
+                  <div class="kpi-row">
+                    <span class="kpi-label">달성</span>
+                    <b class="kpi-value" data-field="produced"></b>
+                  </div>
+                </div>
+              </div>
+
+              <div class="feeder-divider"></div>
+
+              <div class="feeder-mini-bars">
+                <div class="mini-row">
+                  <span class="mini-label">UPPER</span>
+                  <div class="mini-track">
+                    <div class="mini-fill mini-fill-upper" data-role="mini-upper"></div>
+                  </div>
+                  <span class="mini-pct" data-role="mini-upper-pct">0%</span>
+                </div>
+
+                <div class="mini-row">
+                  <span class="mini-label">MIDDLE</span>
+                  <div class="mini-track">
+                    <div class="mini-fill mini-fill-middle" data-role="mini-middle"></div>
+                  </div>
+                  <span class="mini-pct" data-role="mini-middle-pct">0%</span>
+                </div>
+
+                <div class="mini-row">
+                  <span class="mini-label">LOWER</span>
+                  <div class="mini-track">
+                    <div class="mini-fill mini-fill-lower" data-role="mini-lower"></div>
+                  </div>
+                  <span class="mini-pct" data-role="mini-lower-pct">0%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+          <!-- 공정별 진행현황 카드 -->
+          <div class="feeder-info2 feeder-card bc" data-proc-id="weekly">
+            <div class="proc-header-row">
+              <div class="feeder-title-row">
+                <div class="feeder-title-main">공정별 진행현황 
+                  <span class="feeder-stitle">(Weekly 기준)</span>
+                </div>
+              </div>
+    
+            </div>
+            
+            <!-- 막대 그래프 영역 -->
+            <div class="proc-bar-chart" id="procBarChart"></div>
+            <!-- 우측 범례 -->
+            <div class="proc-legend">
+            <span class="proc-legend-item">
+              <span class="proc-legend-dot proc-legend-dot--plan"></span>
+              <span class="proc-legend-label">계획</span>
+            </span>
+            <span class="proc-legend-item">
+              <span class="proc-legend-dot proc-legend-dot--actual"></span>
+              <span class="proc-legend-label">실적</span>
+            </span>
+            <span class="proc-legend-item">
+              <span class="proc-legend-dot proc-legend-dot--daily"></span>
+              <span class="proc-legend-label">일간</span>
+            </span>
+            </div>
+          </div>
+    
+          <!-- 공정 지연 현황 카드 -->
+          <div class="feeder-info3 feeder-card bc" data-delay-role="delay-card">
+            <div class="proc-header-row">
+              <span class="feeder-title-main"><img src="./images/warning.png" alt="경고아이콘"> 공정 지연 현황</span>
+            </div>
+            <div class="delay-con">
+              <!-- data-code 연결하면 됨 -->
+              <div class="delay-left">
+                <div class="delay-item" data-code="A09W" data-proc="PBC" data-status="delayed">
+                  <span class="delay-label">A09W / PBC</span>
+                  <span class="status-delayed">delayed</span>
+                </div>
+                <div class="delay-item" data-code="C13F" data-proc="ADAPTOR" data-status="delayed">
+                  <span class="delay-label">C13F / Adaptor</span>
+                  <span class="status-delayed">delayed</span>
+                </div>
+              </div>
+              <div class="vline"></div>
+              <div class="delay-right">
+                <div class="delay-item" data-code="E02P" data-proc="P+PBO" data-status="delayed">
+                  <span class="delay-label">E02P / P+PBO</span>
+                  <span class="status-delayed">delayed</span>
+                </div>
+                <div class="delay-item" data-code="R19F" data-proc="FIN" data-status="delayed">
+                  <span class="delay-label">R19F / FIN</span>
+                  <span class="status-delayed">delayed</span>
+                </div>
+  
+              </div>
+            </div>
+          </div>
+    
+        </article>
+      </section>
+    </div>
   </div>
 
-  <div class="wrap">
-    <svg id="plateSvg"
-      viewBox="0 0 1201 822"
-      preserveAspectRatio="xMidYMid meet"
-      aria-label="Feeder plate overlay"
-    >
-      <defs>
-        <!-- 바깥 원 -->
-        <radialGradient id="concaveGrad" cx="50%" cy="50%" r="60%">
-          <!-- center = darkest -->
-          <stop offset="0%"   stop-color="#0A0D02" stop-opacity="1"/>
-          <stop offset="50%"  stop-color="#141908" stop-opacity="1"/>
-          <!-- rim = brighter (gives the "lip") -->
-          <stop offset="80%"  stop-color="#3B4450" stop-opacity="1"/>
-          <stop offset="100%" stop-color="#AEB6C0" stop-opacity="1"/>
-        </radialGradient>
 
-        <!-- Sharp lip highlight -->
-        <radialGradient id="lipGrad" cx="50%" cy="50%" r="60%">
-          <stop offset="0%"   stop-color="#ffffff" stop-opacity="0"/>
-          <stop offset="78%"  stop-color="#ffffff" stop-opacity="0"/>
-          <stop offset="90%"  stop-color="#ffffff" stop-opacity="0.25"/>
-          <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
-        </radialGradient>
-      </defs>
-      <defs>
-      <!-- [상태원 볼록 효과용] 경사(엠보스) 테두리 그라데이션  -->
-      <linearGradient id="bevelStroke" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.70"/>
-        <stop offset="45%"  stop-color="#ffffff" stop-opacity="0.12"/>
-        <stop offset="55%"  stop-color="#000000" stop-opacity="0.10"/>
-        <stop offset="100%" stop-color="#000000" stop-opacity="0.55"/>
-      </linearGradient>
-
-      <!-- [상태원 볼록 효과용] 하이라이트(유광 반짝임) -->
-      <radialGradient id="statusSpec" cx="35%" cy="35%" r="60%">
-        <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.55"/>
-        <stop offset="40%"  stop-color="#ffffff" stop-opacity="0.20"/>
-        <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
-      </radialGradient>
-    </defs>
-      <image href="./images/feeder.png" x="0" y="0" width="1201" height="822"></image>
-      <g id="holesLayer"></g>
-    </svg>
-  </div>
-  <script>
-    const holes = [{"id": "A09", "x": 492.6, "y": 34.2}, {"id": "A10", "x": 535.8, "y": 34.2}, {"id": "A11", "x": 579.0, "y": 34.2}, {"id": "A12", "x": 622.2, "y": 31.8}, {"id": "A13", "x": 664.2, "y": 34.2}, {"id": "A14", "x": 707.4, "y": 34.2}, {"id": "B06", "x": 363.0, "y": 69.0}, {"id": "B07", "x": 406.2, "y": 69.0}, {"id": "B08", "x": 449.4, "y": 67.8}, {"id": "B09", "x": 492.6, "y": 69.0}, {"id": "B10", "x": 535.8, "y": 69.0}, {"id": "B11", "x": 579.0, "y": 69.0}, {"id": "B12", "x": 622.2, "y": 67.8}, {"id": "B13", "x": 664.2, "y": 69.0}, {"id": "B14", "x": 707.4, "y": 69.0}, {"id": "B15", "x": 750.6, "y": 69.0}, {"id": "B16", "x": 793.8, "y": 69.0}, {"id": "B17", "x": 837.0, "y": 69.0}, {"id": "C05", "x": 321.0, "y": 102.6}, {"id": "C06", "x": 363.0, "y": 103.8}, {"id": "C07", "x": 406.2, "y": 103.8}, {"id": "C08", "x": 449.4, "y": 103.8}, {"id": "C09", "x": 492.6, "y": 102.6}, {"id": "C10", "x": 535.8, "y": 102.6}, {"id": "C11", "x": 579.0, "y": 105.0}, {"id": "C12", "x": 622.2, "y": 105.0}, {"id": "C13", "x": 664.2, "y": 102.6}, {"id": "C14", "x": 707.4, "y": 102.6}, {"id": "C15", "x": 750.6, "y": 103.8}, {"id": "C16", "x": 793.8, "y": 102.6}, {"id": "C17", "x": 837.0, "y": 102.6}, {"id": "C18", "x": 880.2, "y": 102.6}, {"id": "D04", "x": 276.6, "y": 137.4}, {"id": "D05", "x": 321.0, "y": 137.4}, {"id": "D06", "x": 363.0, "y": 137.4}, {"id": "D07", "x": 406.2, "y": 137.4}, {"id": "D08", "x": 449.4, "y": 138.6}, {"id": "D09", "x": 492.6, "y": 137.4}, {"id": "D10", "x": 535.8, "y": 137.4}, {"id": "D11", "x": 579.0, "y": 137.4}, {"id": "D12", "x": 622.2, "y": 137.4}, {"id": "D13", "x": 664.2, "y": 137.4}, {"id": "D14", "x": 707.4, "y": 137.4}, {"id": "D15", "x": 750.6, "y": 137.4}, {"id": "D16", "x": 793.8, "y": 137.4}, {"id": "D17", "x": 837.0, "y": 137.4}, {"id": "D18", "x": 880.2, "y": 137.4}, {"id": "D19", "x": 923.4, "y": 137.4}, {"id": "E03", "x": 234.6, "y": 171.0}, {"id": "E04", "x": 276.6, "y": 173.4}, {"id": "E05", "x": 321.0, "y": 172.2}, {"id": "E06", "x": 363.0, "y": 171.0}, {"id": "E07", "x": 406.2, "y": 171.0}, {"id": "E08", "x": 449.4, "y": 171.0}, {"id": "E09", "x": 492.6, "y": 171.0}, {"id": "E10", "x": 535.8, "y": 172.2}, {"id": "E11", "x": 579.0, "y": 171.0}, {"id": "E12", "x": 622.2, "y": 169.8}, {"id": "E13", "x": 664.2, "y": 172.2}, {"id": "E14", "x": 707.4, "y": 171.0}, {"id": "E15", "x": 750.6, "y": 171.0}, {"id": "E16", "x": 793.8, "y": 171.0}, {"id": "E17", "x": 837.0, "y": 172.2}, {"id": "E18", "x": 880.2, "y": 172.2}, {"id": "E19", "x": 923.4, "y": 172.2}, {"id": "E20", "x": 965.4, "y": 171.0}, {"id": "F03", "x": 234.6, "y": 205.8}, {"id": "F04", "x": 276.6, "y": 205.8}, {"id": "F05", "x": 321.0, "y": 208.2}, {"id": "F06", "x": 363.0, "y": 207.0}, {"id": "F07", "x": 406.2, "y": 208.2}, {"id": "F08", "x": 449.4, "y": 207.0}, {"id": "F09", "x": 492.6, "y": 205.8}, {"id": "F10", "x": 535.8, "y": 205.8}, {"id": "F11", "x": 579.0, "y": 205.8}, {"id": "F12", "x": 622.2, "y": 205.8}, {"id": "F13", "x": 664.2, "y": 205.8}, {"id": "F14", "x": 707.4, "y": 205.8}, {"id": "F15", "x": 750.6, "y": 205.8}, {"id": "F16", "x": 793.8, "y": 205.8}, {"id": "F17", "x": 837.0, "y": 205.8}, {"id": "F18", "x": 880.2, "y": 205.8}, {"id": "F19", "x": 923.4, "y": 208.2}, {"id": "F20", "x": 965.4, "y": 205.8}, {"id": "G02", "x": 191.4, "y": 240.6}, {"id": "G03", "x": 234.6, "y": 240.6}, {"id": "G04", "x": 276.6, "y": 239.4}, {"id": "G05", "x": 321.0, "y": 243.0}, {"id": "G06", "x": 363.0, "y": 240.6}, {"id": "G07", "x": 406.2, "y": 240.6}, {"id": "G08", "x": 449.4, "y": 240.6}, {"id": "G09", "x": 492.6, "y": 239.4}, {"id": "G10", "x": 535.8, "y": 240.6}, {"id": "G11", "x": 579.0, "y": 243.0}, {"id": "G12", "x": 622.2, "y": 239.4}, {"id": "G13", "x": 664.2, "y": 240.6}, {"id": "G14", "x": 707.4, "y": 240.6}, {"id": "G15", "x": 750.6, "y": 243.0}, {"id": "G16", "x": 793.8, "y": 240.6}, {"id": "G17", "x": 837.0, "y": 240.6}, {"id": "G18", "x": 880.2, "y": 237.0}, {"id": "G19", "x": 923.4, "y": 240.6}, {"id": "G20", "x": 965.4, "y": 240.6}, {"id": "G21", "x": 1009.8, "y": 240.6}, {"id": "H02", "x": 191.4, "y": 274.2}, {"id": "H03", "x": 234.6, "y": 275.4}, {"id": "H04", "x": 276.6, "y": 274.2}, {"id": "H05", "x": 321.0, "y": 274.2}, {"id": "H06", "x": 363.0, "y": 274.2}, {"id": "H07", "x": 406.2, "y": 274.2}, {"id": "H08", "x": 449.4, "y": 274.2}, {"id": "H09", "x": 492.6, "y": 274.2}, {"id": "H10", "x": 535.8, "y": 274.2}, {"id": "H11", "x": 579.0, "y": 274.2}, {"id": "H12", "x": 622.2, "y": 277.8}, {"id": "H13", "x": 664.2, "y": 276.6}, {"id": "H14", "x": 707.4, "y": 274.2}, {"id": "H15", "x": 750.6, "y": 274.2}, {"id": "H16", "x": 793.8, "y": 274.2}, {"id": "H17", "x": 837.0, "y": 275.4}, {"id": "H18", "x": 880.2, "y": 274.2}, {"id": "H19", "x": 923.4, "y": 277.8}, {"id": "H20", "x": 965.4, "y": 275.4}, {"id": "H21", "x": 1009.8, "y": 274.2}, {"id": "J01", "x": 148.2, "y": 309.0}, {"id": "J02", "x": 191.4, "y": 309.0}, {"id": "J03", "x": 234.6, "y": 309.0}, {"id": "J04", "x": 276.6, "y": 309.0}, {"id": "J05", "x": 321.0, "y": 309.0}, {"id": "J06", "x": 363.0, "y": 309.0}, {"id": "J07", "x": 406.2, "y": 309.0}, {"id": "J08", "x": 449.4, "y": 309.0}, {"id": "J09", "x": 492.6, "y": 309.0}, {"id": "J10", "x": 535.8, "y": 309.0}, {"id": "J11", "x": 579.0, "y": 309.0}, {"id": "J12", "x": 622.2, "y": 309.0}, {"id": "J13", "x": 664.2, "y": 309.0}, {"id": "J14", "x": 707.4, "y": 309.0}, {"id": "J15", "x": 750.6, "y": 309.0}, {"id": "J16", "x": 793.8, "y": 309.0}, {"id": "J17", "x": 837.0, "y": 309.0}, {"id": "J18", "x": 880.2, "y": 309.0}, {"id": "J19", "x": 923.4, "y": 309.0}, {"id": "J20", "x": 965.4, "y": 309.0}, {"id": "J21", "x": 1009.8, "y": 309.0}, {"id": "J22", "x": 1051.8, "y": 309.0}, {"id": "K01", "x": 148.2, "y": 342.6}, {"id": "K02", "x": 191.4, "y": 342.6}, {"id": "K03", "x": 234.6, "y": 343.8}, {"id": "K04", "x": 276.6, "y": 343.8}, {"id": "K05", "x": 321.0, "y": 341.4}, {"id": "K06", "x": 363.0, "y": 343.8}, {"id": "K07", "x": 406.2, "y": 343.8}, {"id": "K08", "x": 449.4, "y": 342.6}, {"id": "K09", "x": 492.6, "y": 342.6}, {"id": "K10", "x": 535.8, "y": 342.6}, {"id": "K11", "x": 579.0, "y": 342.6}, {"id": "K12", "x": 622.2, "y": 342.6}, {"id": "K13", "x": 664.2, "y": 342.6}, {"id": "K14", "x": 707.4, "y": 342.6}, {"id": "K15", "x": 750.6, "y": 343.8}, {"id": "K16", "x": 793.8, "y": 342.6}, {"id": "K17", "x": 837.0, "y": 343.8}, {"id": "K18", "x": 880.2, "y": 342.6}, {"id": "K19", "x": 923.4, "y": 342.6}, {"id": "K20", "x": 965.4, "y": 342.6}, {"id": "K21", "x": 1009.8, "y": 342.6}, {"id": "K22", "x": 1051.8, "y": 341.4}, {"id": "L01", "x": 148.2, "y": 376.2}, {"id": "L02", "x": 191.4, "y": 379.8}, {"id": "L03", "x": 234.6, "y": 377.4}, {"id": "L04", "x": 276.6, "y": 377.4}, {"id": "L05", "x": 321.0, "y": 377.4}, {"id": "L06", "x": 363.0, "y": 377.4}, {"id": "L07", "x": 406.2, "y": 377.4}, {"id": "L08", "x": 449.4, "y": 377.4}, {"id": "L09", "x": 492.6, "y": 377.4}, {"id": "L10", "x": 535.8, "y": 377.4}, {"id": "L11", "x": 579.0, "y": 377.4}, {"id": "L12", "x": 622.2, "y": 377.4}, {"id": "L13", "x": 664.2, "y": 377.4}, {"id": "L14", "x": 707.4, "y": 377.4}, {"id": "L15", "x": 750.6, "y": 377.4}, {"id": "L16", "x": 793.8, "y": 377.4}, {"id": "L17", "x": 837.0, "y": 377.4}, {"id": "L18", "x": 880.2, "y": 377.4}, {"id": "L19", "x": 923.4, "y": 377.4}, {"id": "L20", "x": 965.4, "y": 377.4}, {"id": "L21", "x": 1009.8, "y": 381.0}, {"id": "L22", "x": 1051.8, "y": 377.4}, {"id": "M01", "x": 148.2, "y": 412.2}, {"id": "M02", "x": 191.4, "y": 412.2}, {"id": "M03", "x": 234.6, "y": 411.0}, {"id": "M04", "x": 276.6, "y": 411.0}, {"id": "M05", "x": 321.0, "y": 411.0}, {"id": "M06", "x": 363.0, "y": 412.2}, {"id": "M07", "x": 406.2, "y": 412.2}, {"id": "M08", "x": 449.4, "y": 411.0}, {"id": "M09", "x": 492.6, "y": 412.2}, {"id": "M10", "x": 535.8, "y": 411.0}, {"id": "M11", "x": 579.0, "y": 411.0}, {"id": "M12", "x": 622.2, "y": 412.2}, {"id": "M13", "x": 664.2, "y": 412.2}, {"id": "M14", "x": 707.4, "y": 412.2}, {"id": "M15", "x": 750.6, "y": 412.2}, {"id": "M16", "x": 793.8, "y": 412.2}, {"id": "M17", "x": 837.0, "y": 411.0}, {"id": "M18", "x": 880.2, "y": 412.2}, {"id": "M19", "x": 923.4, "y": 412.2}, {"id": "M20", "x": 965.4, "y": 412.2}, {"id": "M21", "x": 1009.8, "y": 412.2}, {"id": "M22", "x": 1051.8, "y": 412.2}, {"id": "N01", "x": 148.2, "y": 447.0}, {"id": "N02", "x": 191.4, "y": 445.8}, {"id": "N03", "x": 234.6, "y": 445.8}, {"id": "N04", "x": 276.6, "y": 445.8}, {"id": "N05", "x": 321.0, "y": 445.8}, {"id": "N06", "x": 363.0, "y": 445.8}, {"id": "N07", "x": 406.2, "y": 444.6}, {"id": "N08", "x": 449.4, "y": 447.0}, {"id": "N09", "x": 492.6, "y": 445.8}, {"id": "N10", "x": 535.8, "y": 445.8}, {"id": "N11", "x": 579.0, "y": 448.2}, {"id": "N12", "x": 622.2, "y": 445.8}, {"id": "N13", "x": 664.2, "y": 445.8}, {"id": "N14", "x": 707.4, "y": 445.8}, {"id": "N15", "x": 750.6, "y": 445.8}, {"id": "N16", "x": 793.8, "y": 445.8}, {"id": "N17", "x": 837.0, "y": 445.8}, {"id": "N18", "x": 880.2, "y": 445.8}, {"id": "N19", "x": 923.4, "y": 445.8}, {"id": "N20", "x": 965.4, "y": 445.8}, {"id": "N21", "x": 1009.8, "y": 445.8}, {"id": "N22", "x": 1051.8, "y": 445.8}, {"id": "O01", "x": 148.2, "y": 480.6}, {"id": "O02", "x": 191.4, "y": 480.6}, {"id": "O03", "x": 234.6, "y": 483.0}, {"id": "O04", "x": 276.6, "y": 480.6}, {"id": "O05", "x": 321.0, "y": 480.6}, {"id": "O06", "x": 363.0, "y": 483.0}, {"id": "O07", "x": 406.2, "y": 480.6}, {"id": "O08", "x": 449.4, "y": 480.6}, {"id": "O09", "x": 492.6, "y": 483.0}, {"id": "O10", "x": 535.8, "y": 480.6}, {"id": "O11", "x": 579.0, "y": 480.6}, {"id": "O12", "x": 622.2, "y": 480.6}, {"id": "O13", "x": 664.2, "y": 483.0}, {"id": "O14", "x": 707.4, "y": 480.6}, {"id": "O15", "x": 750.6, "y": 480.6}, {"id": "O16", "x": 793.8, "y": 480.6}, {"id": "O17", "x": 837.0, "y": 480.6}, {"id": "O18", "x": 880.2, "y": 480.6}, {"id": "O19", "x": 923.4, "y": 480.6}, {"id": "O20", "x": 965.4, "y": 480.6}, {"id": "O21", "x": 1009.8, "y": 483.0}, {"id": "O22", "x": 1051.8, "y": 479.4}, {"id": "P02", "x": 191.4, "y": 515.4}, {"id": "P03", "x": 234.6, "y": 514.2}, {"id": "P04", "x": 276.6, "y": 514.2}, {"id": "P05", "x": 321.0, "y": 514.2}, {"id": "P06", "x": 363.0, "y": 514.2}, {"id": "P07", "x": 406.2, "y": 515.4}, {"id": "P08", "x": 449.4, "y": 516.6}, {"id": "P09", "x": 492.6, "y": 515.4}, {"id": "P10", "x": 535.8, "y": 514.2}, {"id": "P11", "x": 579.0, "y": 514.2}, {"id": "P12", "x": 622.2, "y": 515.4}, {"id": "P13", "x": 664.2, "y": 514.2}, {"id": "P14", "x": 707.4, "y": 515.4}, {"id": "P15", "x": 750.6, "y": 515.4}, {"id": "P16", "x": 793.8, "y": 515.4}, {"id": "P17", "x": 837.0, "y": 515.4}, {"id": "P18", "x": 880.2, "y": 514.2}, {"id": "P19", "x": 923.4, "y": 517.8}, {"id": "P20", "x": 965.4, "y": 514.2}, {"id": "P21", "x": 1009.8, "y": 515.4}, {"id": "Q02", "x": 191.4, "y": 549.0}, {"id": "Q03", "x": 234.6, "y": 549.0}, {"id": "Q04", "x": 276.6, "y": 549.0}, {"id": "Q05", "x": 321.0, "y": 549.0}, {"id": "Q06", "x": 363.0, "y": 549.0}, {"id": "Q07", "x": 406.2, "y": 549.0}, {"id": "Q08", "x": 449.4, "y": 549.0}, {"id": "Q09", "x": 492.6, "y": 549.0}, {"id": "Q10", "x": 535.8, "y": 549.0}, {"id": "Q11", "x": 579.0, "y": 549.0}, {"id": "Q12", "x": 622.2, "y": 549.0}, {"id": "Q13", "x": 664.2, "y": 549.0}, {"id": "Q14", "x": 707.4, "y": 550.2}, {"id": "Q15", "x": 750.6, "y": 549.0}, {"id": "Q16", "x": 793.8, "y": 549.0}, {"id": "Q17", "x": 837.0, "y": 549.0}, {"id": "Q18", "x": 880.2, "y": 546.6}, {"id": "Q19", "x": 923.4, "y": 551.4}, {"id": "Q20", "x": 965.4, "y": 549.0}, {"id": "Q21", "x": 1009.8, "y": 549.0}, {"id": "R03", "x": 234.6, "y": 583.8}, {"id": "R04", "x": 276.6, "y": 583.8}, {"id": "R05", "x": 321.0, "y": 583.8}, {"id": "R06", "x": 363.0, "y": 583.8}, {"id": "R07", "x": 406.2, "y": 583.8}, {"id": "R08", "x": 449.4, "y": 583.8}, {"id": "R09", "x": 492.6, "y": 582.6}, {"id": "R10", "x": 535.8, "y": 583.8}, {"id": "R11", "x": 579.0, "y": 583.8}, {"id": "R12", "x": 622.2, "y": 583.8}, {"id": "R13", "x": 664.2, "y": 583.8}, {"id": "R14", "x": 707.4, "y": 583.8}, {"id": "R15", "x": 750.6, "y": 583.8}, {"id": "R16", "x": 793.8, "y": 583.8}, {"id": "R17", "x": 837.0, "y": 583.8}, {"id": "R18", "x": 880.2, "y": 583.8}, {"id": "R19", "x": 923.4, "y": 586.2}, {"id": "R20", "x": 965.4, "y": 583.8}, {"id": "S03", "x": 234.6, "y": 617.4}, {"id": "S04", "x": 276.6, "y": 618.6}, {"id": "S05", "x": 321.0, "y": 617.4}, {"id": "S06", "x": 363.0, "y": 618.6}, {"id": "S07", "x": 406.2, "y": 617.4}, {"id": "S08", "x": 449.4, "y": 617.4}, {"id": "S09", "x": 492.6, "y": 617.4}, {"id": "S10", "x": 535.8, "y": 618.6}, {"id": "S11", "x": 579.0, "y": 618.6}, {"id": "S12", "x": 622.2, "y": 617.4}, {"id": "S13", "x": 664.2, "y": 617.4}, {"id": "S14", "x": 707.4, "y": 619.8}, {"id": "S15", "x": 750.6, "y": 618.6}, {"id": "S16", "x": 793.8, "y": 617.4}, {"id": "S17", "x": 837.0, "y": 618.6}, {"id": "S18", "x": 880.2, "y": 617.4}, {"id": "S19", "x": 923.4, "y": 618.6}, {"id": "S20", "x": 965.4, "y": 617.4}, {"id": "T04", "x": 276.6, "y": 652.2}, {"id": "T05", "x": 321.0, "y": 652.2}, {"id": "T06", "x": 363.0, "y": 652.2}, {"id": "T07", "x": 406.2, "y": 652.2}, {"id": "T08", "x": 449.4, "y": 652.2}, {"id": "T09", "x": 492.6, "y": 652.2}, {"id": "T10", "x": 535.8, "y": 652.2}, {"id": "T11", "x": 579.0, "y": 653.4}, {"id": "T12", "x": 622.2, "y": 652.2}, {"id": "T13", "x": 664.2, "y": 652.2}, {"id": "T14", "x": 707.4, "y": 652.2}, {"id": "T15", "x": 750.6, "y": 652.2}, {"id": "T16", "x": 793.8, "y": 652.2}, {"id": "T17", "x": 837.0, "y": 652.2}, {"id": "T18", "x": 880.2, "y": 652.2}, {"id": "T19", "x": 923.4, "y": 652.2}, {"id": "U05", "x": 321.0, "y": 685.8}, {"id": "U06", "x": 363.0, "y": 685.8}, {"id": "U07", "x": 406.2, "y": 685.8}, {"id": "U08", "x": 449.4, "y": 685.8}, {"id": "U09", "x": 492.6, "y": 685.8}, {"id": "U10", "x": 535.8, "y": 687.0}, {"id": "U11", "x": 579.0, "y": 687.0}, {"id": "U12", "x": 622.2, "y": 685.8}, {"id": "U13", "x": 664.2, "y": 685.8}, {"id": "U14", "x": 707.4, "y": 685.8}, {"id": "U15", "x": 750.6, "y": 685.8}, {"id": "U16", "x": 793.8, "y": 685.8}, {"id": "U17", "x": 837.0, "y": 687.0}, {"id": "U18", "x": 880.2, "y": 685.8}, {"id": "V06", "x": 363.0, "y": 720.6}, {"id": "V07", "x": 406.2, "y": 720.6}, {"id": "V08", "x": 449.4, "y": 720.6}, {"id": "V09", "x": 492.6, "y": 720.6}, {"id": "V10", "x": 535.8, "y": 720.6}, {"id": "V11", "x": 579.0, "y": 720.6}, {"id": "V12", "x": 622.2, "y": 720.6}, {"id": "V13", "x": 664.2, "y": 720.6}, {"id": "V14", "x": 707.4, "y": 720.6}, {"id": "V15", "x": 750.6, "y": 720.6}, {"id": "V16", "x": 793.8, "y": 720.6}, {"id": "V17", "x": 837.0, "y": 720.6}, {"id": "W09", "x": 492.6, "y": 755.4}, {"id": "W10", "x": 535.8, "y": 755.4}, {"id": "W11", "x": 579.0, "y": 755.4}, {"id": "W12", "x": 622.2, "y": 755.4}, {"id": "W13", "x": 664.2, "y": 755.4}, {"id": "W14", "x": 707.4, "y": 755.4}];
-    const statusById = {};
-
-    // ===== Tunables (most important) =====
-    const BASE_R        = 13.4; // concave base radius (covers black hole)
-    const LIP_R         = 13.9; // thin lip highlight radius (slightly larger)
-    const STATUS_R      = 12.2; // status fill radius (inside rim)
-    const BASE_OPACITY  = 0.98; // concave strength
-    const LIP_OPACITY   = 0.55; // lip subtlety
-    const STATUS_OPACITY = 0.92;
-    // ====================================
-
-    function colorOf(status) {
-      switch (status) {
-        case "ok":       return "#159C61";  // green
-        case "before": return "#F3F4F6";  // white
-        case "delay":    return "#E6243C";  // red
-        default:         return "transparent";
-      }
-    }
-
-    function renderHoles() {
-      const ns = "http://www.w3.org/2000/svg";
-      const layer = document.getElementById("holesLayer");
-      layer.innerHTML = "";
-
-      for (const h of holes) {
-        const status = statusById[h.id];
-
-        // 1) Concave base (always) — hides the background black hole
-        const base = document.createElementNS(ns, "circle");
-        base.setAttribute("cx", h.x);
-        base.setAttribute("cy", h.y);
-        base.setAttribute("r", BASE_R);
-        base.setAttribute("fill", "url(#concaveGrad)");
-        base.setAttribute("opacity", String(BASE_OPACITY));
-        layer.appendChild(base);
-
-        // 2) Subtle lip highlight (optional but helps the inward feel)
-        const lip = document.createElementNS(ns, "circle");
-        lip.setAttribute("cx", h.x);
-        lip.setAttribute("cy", h.y);
-        lip.setAttribute("r", LIP_R);
-        lip.setAttribute("fill", "url(#lipGrad)");
-        lip.setAttribute("opacity", String(LIP_OPACITY));
-        layer.appendChild(lip);
-
-        // 3) 상태 원(볼록 버튼 스타일) — status가 있을 때만 표시
-        const fill = colorOf(status);
-        if (fill !== "transparent") {
-
-          // 3-1) [바탕색 원] 실제 상태 색상(초록/흰/빨강)
-          const dot = document.createElementNS(ns, "circle");
-          dot.setAttribute("cx", h.x);
-          dot.setAttribute("cy", h.y);
-          dot.setAttribute("r", STATUS_R);
-          dot.setAttribute("fill", fill);
-          dot.setAttribute("opacity", String(STATUS_OPACITY));
-          layer.appendChild(dot);
-
-          // 3-2) [경사/엠보스 테두리]
-          const rim = document.createElementNS(ns, "circle");
-          rim.setAttribute("cx", h.x);
-          rim.setAttribute("cy", h.y);
-          rim.setAttribute("r", STATUS_R - 0.4);
-          rim.setAttribute("fill", "none");
-          rim.setAttribute("vector-effect", "non-scaling-stroke");
-          rim.setAttribute("opacity", "0.95");
-          layer.appendChild(rim);
-
-          // 3-3) [하이라이트(반짝임)] 상단 좌측에 살짝 광택
-          const hi = document.createElementNS(ns, "circle");
-          hi.setAttribute("cx", h.x - STATUS_R * 0.25);
-          hi.setAttribute("cy", h.y - STATUS_R * 0.28);
-          hi.setAttribute("r", STATUS_R * 0.55);
-          hi.setAttribute("fill", "url(#statusSpec)");
-          hi.setAttribute("opacity", "0.3");
-          layer.appendChild(hi);
-        }
-      }
-    }
-
-    function updateStatus(nextMap) {
-      Object.assign(statusById, nextMap);
-      renderHoles();
-    }
-    window.updateStatus = updateStatus;
-
-    document.getElementById("demoBtn").addEventListener("click", () => {
-      const ids = holes.map(h => h.id);
-      const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
-      const states = ["ok", "before", "delay", ""];
-      const next = {};
-      for (let i = 0; i < Math.min(120, ids.length); i++) {
-        next[pick(ids)] = pick(states);
-      }
-      updateStatus(next);
-    });
-
-    document.getElementById("resetBtn").addEventListener("click", () => {
-      for (const k in statusById) delete statusById[k];
-      renderHoles();
-    });
-
-    renderHoles();
-  </script>
 </body>
 </html>

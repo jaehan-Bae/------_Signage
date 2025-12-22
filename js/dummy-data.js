@@ -112,7 +112,7 @@ const procDailyAccumDummy = [
   { key:"bend_crb", value:9 },
   { key:"bend_lrb", value:13 },
   { key:"heat", value:13 },
-  { key:"heat_crb", value:13 },   // 오타 수정 (CRD → CRB)
+  { key:"heat_crb", value:13 },
   { key:"heat_lrb", value:13 },
   { key:"ptop", value:13 },
   { key:"pipe_pbo", value:17 },
