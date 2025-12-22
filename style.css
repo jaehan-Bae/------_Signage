@@ -673,7 +673,11 @@ header {
   gap: 15px;
   height: 100%;
 }
-.feeder-info1{ flex:2; display:flex; flex-direction:column; gap:10px; }
+.feeder-info1{ 
+  flex:1.5; 
+  display:flex; 
+  flex-direction:column; 
+  gap:10px; }
 .feeder-info2{ 
   flex:2; 
   display:flex; 
