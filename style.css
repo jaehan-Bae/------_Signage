@@ -145,9 +145,9 @@ header {
 
 /* 마커 좌표 */
 .m-canada { left: 16%;  top: 33%; }
-.m-romania{ left: 54.5%; top: 30%; }
-.m-china  { left: 79%;  top: 43%; }
-.m-korea  { left: 82%;  top: 36%; }
+.m-romania{ left: 54.5%; top: 35%; }
+.m-china  { left: 78%;  top: 44%; }
+.m-korea  { left: 82%;  top: 40%; }
 
 /* 색상 토큰 */
 .is-p1{ --c: #1E86EE; } 
