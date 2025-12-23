@@ -291,7 +291,6 @@ header {
 
 .card--big .feeder-canvas{
   position: absolute;
-  top: 50px;
   width: 100px;
   height: 100px;
 }
