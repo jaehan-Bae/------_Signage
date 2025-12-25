@@ -362,14 +362,6 @@ header {
 }
 .card--small{ min-height: 140px; }
 
-.card.card--big .mini-row{
-  display: grid;
-  grid-template-columns: 1fr 56px;
-  align-items: center;
-  gap: 10px;
-  margin-top: 12px;
-}
-
 .card.card--big [data-role^="mini-"]{
   height: 10px;
   border-radius: 6px;
@@ -544,18 +536,25 @@ header {
 }
 .card.card--big .mini-row{
   display: grid;
-  grid-template-columns: 60px 1fr 40px;
+  grid-template-columns: 100px 1fr 40px;
   align-items: center;
   gap: 10px;
-  /* 줄 높이 고정 -> 카드마다 동일 */
   min-height: 24px;
+  gap: 17px;
 }
 .card.card--big .mini-row + .mini-row{
   margin-top: 4px;        
 }
 .card.card--big .mini-label{
   font-size: 12px;
-  color: #111827;
+  color: #fff;
+}
+.label-box {
+  background: #93a3c6;
+  padding: 0 5px;
+  border-radius: 3px;
+  min-width: 53px;
+  text-align: center;
 }
 .mini-track{
   height:14px;
@@ -572,7 +571,9 @@ header {
 .card.card--big .mini-pct{
   text-align: right;
   font-size: 14px;
-  color: #686D78;
+  color: #686D78;  
+  display: flex;
+  align-items: center;
 }
 /* CERNAVODA 카드 내부 mini-fill 색상 테마 */
 .card[data-card="cernavoda"] .mini-fill[data-role="mini-upper"]{
@@ -847,6 +848,12 @@ body.theme-cernavoda
   font-weight:0;
   color:#111;
   letter-spacing:0.2px;
+  display: flex;
+  gap: 7px;
+}
+.mini-date {
+  color: #7d8188;
+  font-size: 11px;
 }
 .mini-track{
   height:12px;
