@@ -319,8 +319,8 @@
       { test: (s) => s.includes("hub"), file: "bg-hubwelding.png" },
       { test: (s) => s.includes("bending"), file: "bg-bending.png" },
       { test: (s) => s.includes("dimention") || s.includes("dimension"), file: "bg-dimention.png" },
-      { test: (s) => s.includes("welding"), file: "bd-welding.png" }, // 스샷에 실제 존재
-      { test: (s) => s.includes("final"), file: "bg-final.png" },     // 스샷에 실제 존재
+      { test: (s) => s.includes("welding"), file: "bd-welding.png" },
+      { test: (s) => s.includes("final"), file: "bg-final.png" },
     ];
 
     const picked = bgMap.find((m) => m.test(key))?.file || "bg-final.png";
