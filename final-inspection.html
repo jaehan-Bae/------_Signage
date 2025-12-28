@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nuclear Feeder Pipe - Manufacturing Status</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="nfpms-wrap" id="nfpmsRoot">
+
+    <!-- 최상단 -->
+    <header class="nfpms-top">
+      <div class="nfpms-top-title">
+        <div class="nfpms-top-line1">
+          <span class="nfpms-top-accent">N</span>uclear Feeder Pipe
+        </div>
+        <div class="nfpms-top-line2">
+          <span class="nfpms-top-accent">M</span>anufacturing Status
+        </div>
+      </div>
+    </header>
+
+    <!-- 2번째줄 서브바 -->
+    <div class="nfpms-subbar">
+      <div class="nfpms-subbar-title" id="nfpmsStageTitle">FINAL INSPECTION</div>
+    </div>
+
+    <!-- 본문 -->
+    <main class="nfpms-panel" id="nfpmsPanel">
+
+      <section class="nfpms-col nfpms-col-left">
+        <div class="nfpms-card-title">
+          <span class="nfpms-card-title-text">PRODUCTION STATUS</span>
+          <span class="nfpms-card-sub" id="nfpmsProjectName">Cernavoda#1</span>
+        </div>
+
+        <div class="nfpms-con-body">
+          <div class="nfpms-left-body">
+            <!-- 도넛 -->
+            <div class="nfpms-donut">
+              <svg class="nfpms-donut-svg" viewBox="0 0 220 220" aria-hidden="true">
+                <circle class="nfpms-donut-track" cx="110" cy="110" r="82"></circle>
+                <circle class="nfpms-donut-progress" cx="110" cy="110" r="82"></circle>
+                <circle class="nfpms-donut-inner" cx="110" cy="110" r="64"></circle>
+              </svg>
+              <div class="nfpms-donut-center">
+                <div class="nfpms-donut-pct" id="nfpmsDonutPct">0%</div>
+              </div>
+            </div>
+  
+            <!-- 범례 -->
+            <div class="nfpms-legend">
+              <div class="nfpms-legend-row">
+                <span class="nfpms-dot"></span>
+                <span class="nfpms-legend-label">target</span>
+                <span class="nfpms-legend-value" id="nfpmsTarget">0</span>
+              </div>
+              <div class="nfpms-legend-row">
+                <span class="nfpms-dot"></span>
+                <span class="nfpms-legend-label">actual</span>
+                <span class="nfpms-legend-value" id="nfpmsActual">0</span>
+              </div>
+            </div>
+          </div>
+          <!-- 딜레이 박스 -->
+          <div class="nfpms-adjust">
+            <div class="nfpms-delay">
+              <div class="nfpms-delay-head">
+                <img class="nfpms-delay-icon" src="images/warning.png" alt="warning"
+                     onerror="this.style.display='none'"/>
+                <span class="nfpms-delay-title">RECENT DELAYS</span>
+              </div>
+              <div class="nfpms-line"></div>
+              <!-- <span><img src="./images/causion.png" alt=""></span> -->
+              <ul class="nfpms-delay-list" id="nfpmsDelayList"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 오른쪽 -->
+      <section class="nfpms-col nfpms-col-right">
+
+        
+        <div class="right-graph">
+          <!-- 주간 바 -->
+          <div class="nfpms-all">
+            <div class="nfpms-right-top">
+              <div class="nfpms-right-top-title">WEEKLY OUTPUT</div>
+              <div class="nfpms-right-top-meta">
+                <span class="nfpms-right-output-label" id="nfpmsWeeklyOutputLabel">0%</span>
+              </div>
+            </div>
+            <div class="nfpms-bar">
+              <div class="nfpms-bar-track">
+                <div class="nfpms-bar-fill" id="nfpmsWeeklyBarFill" style="width:0%"></div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- WEEKLY PRODUCTION -->
+          <div class="nfpms-right-bottom">
+            <div class="nfpms-right-bottom-title">
+              <span class="nfpms-right-bottom-text">WEEKLY PRODUCTION</span>
+            </div>
+  
+            <div class="nfpms-chart-frame">
+              <!-- width/height는 JS가 DPI 맞춰 재설정함 -->
+              <canvas id="nfpmsWeeklyChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- 우하단 시간 -->
+    <div class="nfpms-footer-time" id="nfpmsNow">0000/00/00 00:00:00</div>
+  </div>
+
+  <script>
+  // =========================
+  // 데이터: 여기 값 바꾸면 화면이 즉시 따라감
+  // =========================
+  window.NFPMS_DATA = {
+    header: { stageTitle: "FINAL INSPECTION" },
+    left: {
+      projectName: "Cernavoda#1",
+      production: { target: 472, actual: 354 }, // pct 없으면 actual/target로 계산
+      delays: [
+            "DIMENSION 3",
+            "WELDING REWORK",
+            "MATERIAL DELAY",
+            "QA HOLD",
+            "SURFACE FINISH ISSUE",
+            "INSPECTION BACKLOG",
+            "DOCUMENTATION PENDING",
+            "EXTERNAL VENDOR ISSUE",
+          ]
+    },
+    right: {
+      weeklyOutputPct: 70,
+      weeklySeries: {
+        labels: ["W1","W2","W3","W4","W5","W6","W7","W8"],
+        values: [18, 22, 30, 35, 20, 38, 33, 31]
+      }
+    },
+    footer: { nowText: null } // 고정표시: "2025/12/20 15:32:04"
+  };
+
+  (() => {
+    const clamp = (n, min, max) => Math.max(min, Math.min(max, Number(n) || 0));
+    const fmt = (n) => (Number(n) || 0).toLocaleString();
+    const $id = (id) => document.getElementById(id);
+
+    function setText(id, text) {
+      const el = $id(id);
+      if (el) el.textContent = text;
+    }
+
+    function setDonutPct(pct) {
+      const circle = document.querySelector(".nfpms-donut-progress");
+      if (!circle) return;
+      const r = Number(circle.getAttribute("r")) || 82;
+      const C = 2 * Math.PI * r;
+      const p = clamp(pct, 0, 100);
+      circle.style.strokeDasharray = `${(C * p) / 100} ${C}`;
+    }
+
+    // CSS 크기 + DPI 보정
+    function prepareCanvas(canvas) {
+      const parent = canvas.parentElement; // 부모 기준 높이
+      if (!parent) return null;
+
+      const dpr = window.devicePixelRatio || 1;
+      const rect = parent.getBoundingClientRect();
+
+      // 부모의 실제 픽셀 크기
+      const cssW = Math.max(1, Math.floor(rect.width));
+      const cssH = Math.max(1, Math.floor(rect.height));
+
+      // 캔버스를 부모 100%로 강제
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
+
+      // drawing buffer를 부모 크기에 맞춤(DPI 고려)
+      canvas.width = Math.floor(cssW * dpr);
+      canvas.height = Math.floor(cssH * dpr);
+
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return null;
+
+      // 이후 좌표계는 CSS px 기준으로 그림
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      return { ctx, w: cssW, h: cssH };
+    }
+
+    function drawWeeklyAreaLine(canvas, labels, values) {
+      if (!canvas) return;
+      const { ctx, w, h } = prepareCanvas(canvas);
+
+      const padL = 44, padR = 14, padT = 12, padB = 26;
+      const cw = w - padL - padR;
+      const ch = h - padT - padB;
+
+      const vals = (values || []).map(v => Number(v) || 0);
+      const labs = labels || [];
+      const maxV = Math.max(1, ...vals);
+      const minV = 0;
+
+      const xStep = vals.length > 1 ? (cw / (vals.length - 1)) : cw;
+      const xAt = (i) => padL + i * xStep;
+      const yAt = (v) => padT + (1 - (v - minV) / (maxV - minV)) * ch;
+
+      ctx.clearRect(0, 0, w, h);
+
+      // grid
+      ctx.globalAlpha = 0.22;
+      ctx.strokeStyle = "#FFFFFF";
+      ctx.lineWidth = 1;
+      const gridLines = 4;
+      for (let i = 0; i <= gridLines; i++) {
+        const y = padT + (ch / gridLines) * i;
+        ctx.beginPath();
+        ctx.moveTo(padL, y);
+        ctx.lineTo(w - padR, y);
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+
+      if (vals.length === 0) return;
+
+      // area
+      ctx.beginPath();
+      vals.forEach((v, i) => {
+        const x = xAt(i);
+        const y = yAt(v);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.lineTo(xAt(vals.length - 1), padT + ch);
+      ctx.lineTo(xAt(0), padT + ch);
+      ctx.closePath();
+      ctx.globalAlpha = 0.18;
+      ctx.fillStyle = "#27DCD5";
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      // line
+      ctx.beginPath();
+      vals.forEach((v, i) => {
+        const x = xAt(i);
+        const y = yAt(v);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.strokeStyle = "#27DCD5";
+      ctx.lineWidth = 2.6;
+      ctx.stroke();
+
+      // points
+      vals.forEach((v, i) => {
+        const x = xAt(i);
+        const y = yAt(v);
+        ctx.beginPath();
+        ctx.arc(x, y, 3.6, 0, Math.PI * 2);
+        ctx.fillStyle = "#27DCD5";
+        ctx.fill();
+      });
+
+      // y labels (max / 0)
+      ctx.fillStyle = "rgba(255,255,255,0.8)";
+      ctx.font = "12px system-ui, -apple-system, Segoe UI, Roboto, Arial";
+      ctx.textAlign = "right";
+      ctx.textBaseline = "middle";
+      ctx.fillText(String(maxV), padL - 8, padT);
+      ctx.fillText("0", padL - 8, padT + ch);
+
+      // x labels (2칸마다)
+      ctx.fillStyle = "rgba(255,255,255,0.7)";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "top";
+      for (let i = 0; i < labs.length; i++) {
+        if (i % 2 === 1) continue;
+        ctx.fillText(String(labs[i]), xAt(i), padT + ch + 6);
+      }
+    }
+
+    function startClock(nowEl, fixedText) {
+      if (!nowEl) return;
+      if (fixedText) { nowEl.textContent = fixedText; return; }
+      const tick = () => {
+        const d = new Date();
+        const yyyy = d.getFullYear();
+        const mm = String(d.getMonth() + 1).padStart(2, "0");
+        const dd = String(d.getDate()).padStart(2, "0");
+        const hh = String(d.getHours()).padStart(2, "0");
+        const mi = String(d.getMinutes()).padStart(2, "0");
+        const ss = String(d.getSeconds()).padStart(2, "0");
+        nowEl.textContent = `${yyyy}/${mm}/${dd} ${hh}:${mi}:${ss}`;
+      };
+      tick();
+      setInterval(tick, 1000);
+    }
+
+    function render() {
+  const data = window.NFPMS_DATA;
+  if (!data) return;
+
+  const stageTitle = data.header?.stageTitle ?? "FINAL INSPECTION";
+  setText("nfpmsStageTitle", stageTitle);
+
+  const panel = $id("nfpmsPanel");
+  if (panel) {
+    const key = String(stageTitle).toLowerCase();
+
+    const bgMap = [
+      { test: (s) => s.includes("hub"), file: "bg-hubwelding.png" },
+      { test: (s) => s.includes("bending"), file: "bg-bending.png" },
+      { test: (s) => s.includes("dimention") || s.includes("dimension"), file: "bg-dimention.png" },
+      { test: (s) => s.includes("welding"), file: "bd-welding.png" }, // 스샷에 실제 존재
+      { test: (s) => s.includes("final"), file: "bg-final.png" },     // 스샷에 실제 존재
+    ];
+
+    const picked = bgMap.find((m) => m.test(key))?.file || "bg-final.png";
+    panel.style.setProperty("--panel-bg-url", `url("/images/${picked}")`);
+    // 배경 이미지 투명도 조절
+    panel.style.setProperty("--panel-bg-opacity", "0.4");
+  }
+      setText("nfpmsProjectName", data.left?.projectName ?? "");
+
+      const target = Number(data.left?.production?.target) || 0;
+      const actual = Number(data.left?.production?.actual) || 0;
+      setText("nfpmsTarget", fmt(target));
+      setText("nfpmsActual", fmt(actual));
+
+      const pctRaw = (data.left?.production?.pct == null)
+        ? (target > 0 ? (actual / target) * 100 : 0)
+        : Number(data.left.production.pct);
+
+      const pct = Math.round(clamp(pctRaw, 0, 100));
+      setText("nfpmsDonutPct", `${pct}%`);
+      setDonutPct(pct);
+
+      // delays
+      const ul = $id("nfpmsDelayList");
+      if (ul) {
+        ul.innerHTML = "";
+
+        (data.left?.delays || []).forEach((t) => {
+          const li = document.createElement("li");
+
+          // 아이콘
+          const img = document.createElement("img");
+          img.src = "./images/causion.png";
+          img.alt = "caution";
+          img.className = "nfpms-delay-item-icon";
+          img.onerror = () => img.remove(); // 이미지 없으면 자동 제거
+
+          // 텍스트
+          const span = document.createElement("span");
+          span.textContent = t;
+
+          // 순서 중요: 아이콘 → 텍스트
+          li.appendChild(img);
+          li.appendChild(span);
+
+          ul.appendChild(li);
+        });
+      }
+
+      // weekly output
+      const outPct = Math.round(clamp(data.right?.weeklyOutputPct, 0, 100));
+      setText("nfpmsWeeklyOutputLabel", `${outPct}%`);
+      const barFill = $id("nfpmsWeeklyBarFill");
+      if (barFill) {
+        // 애니메이션 보이도록 rAF 한 번 태움
+        barFill.style.width = "0%";
+        requestAnimationFrame(() => {
+          barFill.style.width = `${outPct}%`;
+        });
+      }
+
+      // chart
+      const canvas = $id("nfpmsWeeklyChart");
+      const series = data.right?.weeklySeries || {};
+      drawWeeklyAreaLine(canvas, series.labels || [], series.values || []);
+
+      // footer
+      startClock($id("nfpmsNow"), data.footer?.nowText ?? null);
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      try { render(); }
+      catch (e) { console.error("[NFPMS] render error:", e); }
+    });
+
+    // 창 크기 변하면 캔버스 다시 리사이즈/리드로우
+    window.addEventListener("resize", () => {
+      const data = window.NFPMS_DATA;
+      if (!data) return;
+      const canvas = $id("nfpmsWeeklyChart");
+      const series = data.right?.weeklySeries || {};
+      drawWeeklyAreaLine(canvas, series.labels || [], series.values || []);
+    });
+  })();
+  </script>
+</body>
+</html>
