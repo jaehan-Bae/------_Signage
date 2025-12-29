@@ -1231,14 +1231,24 @@ body.theme-cernavoda .mini-fill-lower{ background:#FF7300; }
     border-radius: 6px;
     padding: 14px 18px;
     margin-bottom: 14px;
+    position: relative;
+  }
+  .nfpms-subbar::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 6px;              /* 박스 바닥에서 살짝 위 */
+    height: 2px;
+    background: #69c266;
+    border-radius: 2px;
   }
   .nfpms-subbar-title {
     text-align: center;
-    font-size: 34px;
-    font-weight: 800;
+    font-size: 40px;
+    font-weight: 900;
     letter-spacing: 1px;
     margin: 4px 0;
-    border-bottom: 2px solid #69c266;
   }
 
   /* Panel */
