@@ -1,0 +1,81 @@
+/* =========================
+   nfpms.line.js
+   - LINE(페이지) 데이터만
+   ========================= */
+
+window.NFPMS_LINES = [
+  {
+    key: "cernavoda_upper",
+    lineName: "CERNAVODA UPPER",
+    order: "CERVONADA #1",
+    subTitle: "UPPER FEEDER",
+    totalTarget: 472,
+    totalActual: 380,
+    delays: ["BENDING"],
+    processes: [
+      "Swaging",
+      "Bending",
+      "Heat Treatment",
+      "Pipe Welding",
+      "PBO Welding",
+      "FE Welding",
+      "Adaptor Welding",
+      "Final Inspection",
+    ],
+  },
+  {
+    key: "cernavoda_lower",
+    lineName: "CERNAVODA LOWER",
+    order: "CERVONADA #1",
+    subTitle: "LOWER FEEDER",
+    totalTarget: 472,
+    totalActual: 354,
+    delays: ["PIPE WELDING", "Bending (CRB)"],
+    processes: [
+      "Swaging",
+      "Bending (CRB)",
+      "Pipe Welding",
+      "PBO Welding",
+      "Bending (LRB)",
+      "Heat Treatment",
+      "Hub Welding",
+      "Final Inspection",
+    ],
+  },
+  {
+    key: "pickering_upper",
+    lineName: "PICKERING UPPER",
+    order: "PICKERING #1",
+    subTitle: "UPPER FEEDER",
+    totalTarget: 472,
+    totalActual: 401,
+    delays: [],
+    processes: [
+      "Swaging",
+      "Bending",
+      "Heat Treatment",
+      "Pipe Welding",
+      "PBO Welding",
+      "FE Welding",
+      "Final Inspection",
+    ],
+  },
+  {
+    key: "pickering_lower",
+    lineName: "PICKERING LOWER",
+    order: "PICKERING #1",
+    subTitle: "LOWER FEEDER",
+    totalTarget: 472,
+    totalActual: 298,
+    delays: ["HEAT TREATMENT"],
+    processes: [
+      "Swaging",
+      "Bending (CRB)",
+      "Pipe Welding",
+      "Bending (LRB)",
+      "Heat Treatment",
+      "Hub Welding",
+      "Final Inspection",
+    ],
+  },
+];

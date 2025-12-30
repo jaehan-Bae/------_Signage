@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NFPMS - PICKERING</title>
+  <link rel="stylesheet" href="./style.css" />
+  <!-- 더미데이터, 실행 -->
+  <script src="./js/nfpms/nfpms.line.js"></script>
+  <script src="./js/nfpms/nfpms.app.js"></script>
+</head>
+<body>
+  <div class="nfpms-wrap" id="nfpmsRoot" data-project="pickering">
+    <!-- 최상단 -->
+    <div class="nfpms-top">
+      <div class="nfpms-top-title">
+        <div class="nfpms-top-line1"><span class="nfpms-top-accent">N</span>uclear Feeder Pipe</div>
+        <div class="nfpms-top-line2"><span class="nfpms-top-accent">M</span>anufacturing Status</div>
+      </div>
+
+      <div class="nfpms-top-meta" id="nfpmsTopMeta">
+        <div class="meta-row meta-row--nums">
+          <span class="meta-chip">TOTAL <b id="metaTotal">0</b></span>
+          <span class="meta-chip">Actual <b id="metaActual">0</b></span>
+          <span class="meta-chip">Remain <b id="metaRemain">0</b></span>
+        </div>
+      </div>
+    </div>
+
+    <main class="nfpms-main">
+      <section class="nfpms-left">
+        <div class="nfpms-line-title">
+          <span class="nfpms-line-arrow">→</span>
+          <span class="nfpms-line-label">LINE :</span>
+          <span class="nfpms-line-name" id="lineName"></span>
+        </div>
+        <div class="nfpms-proc-grid" id="procGrid"></div>
+      </section>
+
+      <aside class="nfpms-right">
+        <div class="nfpms-right-card">
+            <!-- 도넛 상단 타이틀 (ORDER) -->
+          <div class="nfpms-donut-head">
+            <div class="nfpms-donut-order" id="metaOrder"></div>
+            <div class="nfpms-donut-sub" id="metaSub"></div>
+          </div>
+
+          <div class="nfpms-donut-wrap">
+            <div class="pg-chart-container">
+              <svg id="pgGearSvg" class="pg-glow-effect" viewBox="0 0 360 360" width="360" height="360"></svg>
+              <div class="pg-inner-border-ring"></div>
+              <div class="pg-center-info">
+                <p id="pgPctValue" class="pg-percentage-text">0%</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="nfpms-big-nums">
+            <span class="nfpms-big-actual" id="bigActual">0</span>
+            <span class="nfpms-big-slash">/</span>
+            <span class="nfpms-big-target" id="bigTarget">0</span>
+          </div>
+
+          <div class="nfpms-delays" id="delayBox">
+            <div class="delay-head">
+              <span class="delay-dot">!</span>
+              <span class="delay-title">RECENT DELAYS</span>
+            </div>
+            <div class="delay-list" id="delayList"></div>
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script>
+    window.NFPMS_PAGE = {
+      filterPrefix: "pickering_",  // pickering_upper, pickering_lower만
+      startKey: "pickering_upper",
+      autoRotate: true,
+      rotateMs: 10000
+    };
+  </script>
+</body>
+</html>
