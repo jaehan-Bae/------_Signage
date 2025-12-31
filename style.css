@@ -1874,7 +1874,7 @@ body.theme-cernavoda .mini-fill-lower{ background:#FF7300; }
   border: 1px solid rgba(255,77,61,0.35);
   color: rgba(255,77,61,0.95);
 }
-.nfpms-wrap[data-project="cernavoda"] .delay-item{
+.nfpms-wrap[data-project="cernavoda"] .delay-items{
   border-color: rgba(255,77,61,0.30);
   background: rgba(255,77,61,0.10);
   color: rgba(255, 210, 200, 0.95);
@@ -1969,7 +1969,7 @@ body.theme-cernavoda .mini-fill-lower{ background:#FF7300; }
   flex-direction:column;
   gap: 8px;
 }
-.delay-left.delay-item{
+.delay-items {
   padding: 10px 12px;
   border-radius: 12px;
   border: 1px solid rgba(255,59,48,0.30);
@@ -1981,7 +1981,7 @@ body.theme-cernavoda .mini-fill-lower{ background:#FF7300; }
   gap: 6px;
   position: relative;
 }
-.delay-item--ok{
+.delay-items--ok{
   border-color: rgba(0,242,255,0.18);
   background: rgba(0,242,255,0.06);
   color: rgba(0,242,255,0.80);

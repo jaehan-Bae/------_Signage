@@ -286,13 +286,13 @@
 
       if (!line.delays || line.delays.length === 0) {
         const ok = document.createElement("div");
-        ok.className = "delay-item delay-item--ok";
+        ok.className = "delay-items delay-items--ok";
         ok.innerHTML = `<span class="delay-text">NO DELAYS</span>`;
         delayList.appendChild(ok);
       } else {
         line.delays.forEach((d) => {
           const item = document.createElement("div");
-          item.className = "delay-item";
+          item.className = "delay-items";
           item.innerHTML = `
             <img src="./images/causion.png" alt="delay" class="delay-icon" />
             <span class="delay-text">${escapeHtml(d)}</span>
