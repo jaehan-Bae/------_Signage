@@ -42,6 +42,7 @@ function drawFeederDonut(canvas, percent, colors) {
 // 2. 공정별 진행현황 막대 + 데일리 실선
 // ===========================
 function renderProcBarChart(targetId, items, dailyAccumItems) {
+
   const container = document.getElementById(targetId);
   if (!container || !Array.isArray(items)) return;
 

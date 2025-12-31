@@ -60,7 +60,6 @@ header {
   align-items: center;
   width: 100%;
 }
-.left {}
 .left img {
   width: 180px;
 }
@@ -222,14 +221,12 @@ header {
   font-size:14px;
   color:#111;
 }
-
 .map-icon-body{
   margin-top: 12px;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
-
 .notice-country{
   display:flex;
   align-items:center;
@@ -238,7 +235,6 @@ header {
   color:#111;
   line-height:1.2;
 }
-
 .dots{
   width: 10px;
   height: 10px;
@@ -246,7 +242,6 @@ header {
   flex: 0 0 auto;
   background: var(--c);
 }
-
 .notice-items{
   margin-left: 20px;
   margin-top: 8px;
@@ -326,13 +321,11 @@ header {
   grid-auto-rows: 1fr;
   align-content: stretch;
 }
-
 .card--big{
   grid-row: span 2;
   min-height: 300px;
   position: relative;
 }
-
 .card--big .feeder-canvas{
   position: absolute;
   width: 100px;
@@ -354,23 +347,19 @@ header {
   color: #005EB8;
 }
 .card--small{ min-height: 140px; }
-
 .card.card--big [data-role^="mini-"]{
   height: 10px;
   border-radius: 6px;
   position: relative;
 }
-
 .card.card--big [data-role="mini-upper"]{ background: #95E1FB; }
 .card.card--big [data-role="mini-middle"]{ background: #337DF6; }
 .card.card--big [data-role="mini-lower"]{ background: #006FE6; }
-
 .card.card--big [data-role$="-pct"]{
   text-align: right;
   font-size: 12px;
   color: #111;
 }
-
 /* other layout blocks */
 .progress-all{ display:flex; flex-direction:column; flex:1; }
 .progress-adjust{ display:flex; flex-direction:column; gap:10px; flex:1; }
@@ -378,7 +367,6 @@ header {
 .progress-bottom{ flex:1; }
 .progress-left{ flex:1; }
 .progress-right{ flex:1; }
-
 
 /* ########### 메인화면- 맵 밑의 토탈 카드 */
 .card.card--big{
@@ -692,29 +680,24 @@ header {
   background: rgba(255,255,255,0.55);
   pointer-events:none;
 }
-
 .head-label-group {
   display: flex;
   align-items: baseline;
   gap: 10px;
 }
-
 .main-device {
   font-size: 18px;
   font-weight: 600;
   letter-spacing: 0.5px;
   color: #1e1e1e;
 }
-
 .main-device span {
   font-weight: 700;
 }
-
 .head-divider {
   color: rgba(0,0,0,0.35);
   font-weight: 300;
 }
-
 .sub-purpose {
   font-size: 14px;
   font-weight: 400;
@@ -1046,6 +1029,7 @@ body.theme-cernavoda .mini-fill-lower{ background:#FF7300; }
   width: 30px;
   border-radius: 5px;
   background-color: #eeeeee; /* 계획: EEEEEE */
+  z-index: 1;
 }
 
 /* 실적(파랑) 막대 */
@@ -1055,6 +1039,7 @@ body.theme-cernavoda .mini-fill-lower{ background:#FF7300; }
   width: 30px;
   border-radius: 0px;
   background-color: #005feb; /* 실적: 005FEB */
+  z-index: 2;
 }
 
 /* X축 라벨 (짧은 이름만) */
@@ -1809,7 +1794,7 @@ body.theme-cernavoda .mini-fill-lower{ background:#FF7300; }
   backdrop-filter: blur(6px);
   position:relative;
 
-  /* ✅ 바닥 여백 제거를 위한 레이아웃 고정 */
+  /* 바닥 여백 제거를 위한 레이아웃 고정 */
   display:flex;
   flex-direction:column;
   gap: 10px;
