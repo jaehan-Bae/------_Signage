@@ -10,8 +10,9 @@ function updateTime() {
   const mm = String(now.getMinutes()).padStart(2, '0');
   const ss = String(now.getSeconds()).padStart(2, '0');
 
+  // id가 "time"인 요소를 찾습니다.
   const timeEl = document.getElementById("time");
-  if (!timeEl) return;   // 안전장치
+  if (!timeEl) return; 
 
   timeEl.textContent = `${y}/${m}/${d} ${hh}:${mm}:${ss}`;
 }
@@ -20,6 +21,11 @@ function startClock() {
   updateTime();
   setInterval(updateTime, 1000);
 }
+
+// ===== HTML이 로드되면 바로 시계 시작 =====
+document.addEventListener("DOMContentLoaded", () => {
+  startClock();
+});
 
 // ===== header 불러오고 → 시계 시작 =====
 document.addEventListener("DOMContentLoaded", () => {

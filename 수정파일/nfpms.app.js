@@ -310,16 +310,25 @@
 
       metrics.forEach((m) => {
         const card = document.createElement("article");
-        card.className = "proc-cards";
+        card.className = "proc-card";
 
         const isDelayed = (line.delays || []).some(
           (x) => String(x).toUpperCase() === String(m.name).toUpperCase()
         );
-        if (isDelayed) card.classList.add("proc-cards--delay");
+        if (isDelayed) card.classList.add("proc-card--delay");
 
         card.innerHTML = `
           <div class="proc-head">
             <div class="proc-name">${escapeHtml(m.name).toUpperCase()}</div>
+            <div class="proc-mini">
+              <span class="proc-mini-label">Target</span>
+              <span class="proc-mini-val">${m.target}</span>
+              <span class="proc-mini-sep">|</span>
+              <span class="proc-mini-label">Remain</span>
+              <span class="proc-mini-val ${
+                m.remain > 0 ? "proc-mini-val--remain" : ""
+              }">${m.remain}</span>
+            </div>
           </div>
 
           <div class="proc-bar">

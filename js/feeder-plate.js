@@ -12,7 +12,7 @@
      --------------------------- */
   const FEEDER_SVG = `
   <svg id="plateSvg"
-    viewBox="0 0 1201 822"
+    viewBox="0 0 1250 990"
     preserveAspectRatio="xMidYMid meet"
     aria-label="Feeder plate overlay">
 
@@ -47,8 +47,8 @@
       </radialGradient>
     </defs>
 
-    <image href="./images/feeder.png" x="0" y="0" width="1201" height="822"></image>
-    <g id="holesLayer"></g>
+    <image href="./images/feeder.png" x="0" y="0" width="1250" height="968"></image>
+    <g id="holesLayer" transform="translate(24, 145)"></g>
   </svg>
   `;
 

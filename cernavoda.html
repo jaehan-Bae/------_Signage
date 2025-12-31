@@ -8,6 +8,7 @@
   <!-- 더미데이터, 실행 -->
   <script src="./js/nfpms/nfpms.line.js"></script>
   <script src="./js/nfpms/nfpms.app.js"></script>
+  <script src="./js/custom.js"></script>
 </head>
 <body>
   <div class="nfpms-wrap" id="nfpmsRoot" data-project="cernavoda">
@@ -18,12 +19,7 @@
         <div class="nfpms-top-line2"><span class="nfpms-top-accent">M</span>anufacturing Status</div>
       </div>
 
-      <div class="nfpms-top-meta" id="nfpmsTopMeta">
-        <div class="meta-row meta-row--nums">
-          <span class="meta-chip">TOTAL <b id="metaTotal">0</b></span>
-          <span class="meta-chip">Actual <b id="metaActual">0</b></span>
-          <span class="meta-chip">Remain <b id="metaRemain">0</b></span>
-        </div>
+      <div class="nfpms-top-meta" id="time">
       </div>
     </div>
 
@@ -31,7 +27,6 @@
       <section class="nfpms-left">
         <div class="nfpms-line-title">
           <span class="nfpms-line-arrow">→</span>
-          <span class="nfpms-line-label">LINE :</span>
           <span class="nfpms-line-name" id="lineName"></span>
         </div>
         <div class="nfpms-proc-grid" id="procGrid"></div>
